@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <!-- <link rel="stylesheet" href="./asd.css"> -->
+<style>
+    html {
+        height: 100%;
+    }
+    
+    body {
+        background: #26394E;
+        height: 100%;
+        font-size: 14px;
+        /* overflow: hidden; */
+        border: 1px solid #ff000000;
+        margin: 0px;
+    }
+    
+    ul {
+        list-style: none;
+        padding: 0px;
+    }
+    
+    a {
+        display: inline-block;
+        height: 100%;
+        width: 100%;
+        text-decoration: none;
+        color: inherit;
+        text-align: center;
+    }
+    
+    h2 {
+        margin-top: 100px;
+        text-align: center;
+        color: #fed057;
+    }
+    
+    .header {
+        background-color: antiquewhite;
+    }
+    
+    .list-box {
+        color: #999999;
+        display: flex;
+        justify-content: center;
+        background-color: black;
+        height: 50px;
+        line-height: 50px;
+    }
+    
+    .list-box::after {
+        content: '';
+        clear: both;
+        height: 0px;
+        display: inline-block;
+    }
+    
+    .list-box>li {
+        position: relative;
+        float: left;
+        width: 100px;
+    }
+    
+    .list-box a {
+        position: relative;
+        overflow: hidden;
+    }
+    
+    .list-box a>span {
+        display: inline-block;
+        left: 0px;
+        right: 0px;
+        transition: top .3s ease;
+    }
+    
+    .list-box a>span.top {
+        position: absolute;
+        top: -50px;
+        background-color: #fed057;
+        color: white;
+    }
+    
+    .list-box a>span.bottm {
+        position: absolute;
+        top: 0px;
+    }
+    /* .list-box li.active span.top {
+        top: 0px;
+    }
+    
+    .list-box li.active span.bottm {
+        top: 50px;
+    } */
+    
+    .list-box li:hover span.top {
+        top: 0px;
+    }
+    
+    .list-box li:hover span.bottm {
+        top: 50px;
+    }
+    
+    .list-box>li:hover .li-box {
+        display: block;
+    }
+    
+    .li-box {
+        display: none;
+        top: 50px;
+        position: absolute;
+        width: 200px;
+        /* height: 200px; */
+        background-color: black;
+        left: 0px;
+    }
+    
+    .li-box>ul {
+        height: 100%;
+        color: aliceblue;
+    }
+    
+    .li-box>ul>li:not(:last-child) {
+        border-bottom: 1px #252525 dashed;
+    }
+    
+    .li-box>ul>li {
+        display: block;
+        padding-left: 20px;
+    }
+    
+    .li-box>ul>li:hover {
+        background-color: #fed057;
+        color: white;
+    }
+    
+    hr {
+        display: inline-block;
+        width: 1px;
+        background-color: #252525;
+        height: 20px;
+        vertical-align: middle;
+        margin: 15px 0px;
+        padding: 0px;
+        border: 0px;
+    }
+    /* .content-box ul {
+        position: relative;
+    }
+    
+    .content-box ul>div {} */
+    
+    .content-box>ul>li {
+        /* position: relative; */
+        height: 50px;
+        line-height: 50px;
+    }
+    
+    .content-box>ul>li a {
+        text-align: left !important;
+        position: relative;
+    }
+    
+    .content-box>ul>li a i,
+    .content-box>ul>li a span {
+        font-size: 11px;
+        margin-left: 10px;
+        color: #969696;
+    }
+    
+    .content-box>ul>li a i {
+        position: absolute;
+        right: 10px;
+    }
+    
+    .content-box>ul>li:hover div {
+        display: block;
+    }
+    
+    .content-box>ul>li div {
+        display: none;
+        position: absolute;
+        top: 0px;
+        left: 100%;
+        width: 120px;
+        padding: 2px 20px;
+        min-height: 98%;
+        background-color: #ffffff;
+        border: 2px solid black;
+        color: black;
+        min-width: 500px;
+    }
+    
+    .content-box>ul>li div>span {
+        width: 19%;
+        display: inline-block;
+        text-align: center;
+    }
+</style></head>
+
+
+
+<body>
+    <h2>导航栏</h2>
+    <div class="header">
+        <ul class="list-box">
+            <li>
+                <a>
+                    <span class="top">首页</span>
+                    <span class="bottm">首页</span>
+                </a>
+                <div class="li-box content-box">
+                    <ul>
+                        <li><a>美食<span>地方菜</span><span>火锅</span><i>&gt;</i></a>
+                            <div>
+                                <span>全部(117)</span>
+                                <span>火锅(17)</span>
+                                <span>烧烤(16)</span>
+                                <span>干果</span>
+                                <span>休闲零食</span>
+                                <span>饼干</span>
+                                <span>菜肴</span>
+                                <span>糕点</span>
+                                <span>肉制食品</span>
+                                <span>茶饮冲泡</span>
+                                <span>全部(117)</span>
+                                <span>火锅(17)</span>
+                                <span>烧烤(16)</span>
+                                <span>干果</span>
+                                <span>休闲零食</span>
+                                <span>饼干</span>
+                                <span>菜肴</span>
+                                <span>糕点</span>
+                                <span>肉制食品</span>
+                                <span>茶饮冲泡</span>
+                            </div>
+                        </li>
+                        <li><a>休闲<span>电影</span><span>KTV</span><i>&gt;</i></a>
+                            <div>
+                                <span>茶艺</span>
+                                <span>插花</span>
+                                <span>炊事用品</span>
+                                <span>装饰用品</span>
+                                <span>化妆用品</span>
+                                <span>茶艺</span>
+                                <span>插花</span>
+                                <span>炊事用品</span>
+                                <span>装饰用品</span>
+                                <span>化妆用品</span>
+                                <span>茶艺</span>
+                                <span>插花</span>
+                                <span>炊事用品</span>
+                                <span>装饰用品</span>
+                                <span>化妆用品</span>
+                                <span>茶艺</span>
+                                <span>插花</span>
+                                <span>炊事用品</span>
+                                <span>装饰用品</span>
+                                <span>化妆用品</span>
+                                <span>茶艺</span>
+                                <span>插花</span>
+                                <span>炊事用品</span>
+                                <span>装饰用品</span>
+                                <span>化妆用品</span>
+                            </div>
+                        </li>
+                        <li><a>旅游<span>酒店</span><span>旅游</span><i>&gt;</i></a>
+                            <div>
+                                <span>摄像</span>
+                                <span>收藏</span>
+                                <span>茶艺</span>
+                                <span>插花</span>
+                                <span>脑筋急转弯</span>
+                                <span>卡拉OK</span>
+                                <span>谜语</span>
+                                <span>谜语</span>
+                                <span>摄像</span>
+                                <span>收藏</span>
+                                <span>茶艺</span>
+                                <span>插花</span>
+                                <span>脑筋急转弯</span>
+                                <span>卡拉OK</span>
+                                <span>谜语</span>
+                                <span>谜语</span>
+                                <span>摄像</span>
+                                <span>收藏</span>
+                                <span>茶艺</span>
+                                <span>插花</span>
+                                <span>脑筋急转弯</span>
+                                <span>卡拉OK</span>
+                                <span>谜语</span>
+                                <span>谜语</span>
+                                <span>摄像</span>
+                                <span>收藏</span>
+                                <span>茶艺</span>
+                                <span>插花</span>
+                                <span>脑筋急转弯</span>
+                                <span>卡拉OK</span>
+                                <span>谜语</span>
+                                <span>谜语</span>
+                            </div>
+                        </li>
+                        <li><a>生活<span>婚纱摄影</span><span>写真</span><i>&gt;</i></a>
+                            <div>
+                                <span>洗漱用品</span>
+                                <span>炊事用品</span>
+                                <span>装饰用品</span>
+                                <span>化妆用品</span>
+                                <span>床上用品</span>
+                                <span>洗漱用品</span>
+                                <span>炊事用品</span>
+                                <span>装饰用品</span>
+                                <span>化妆用品</span>
+                                <span>床上用品</span>
+                                <span>洗漱用品</span>
+                                <span>炊事用品</span>
+                                <span>装饰用品</span>
+                                <span>化妆用品</span>
+                                <span>床上用品</span>
+                                <span>洗漱用品</span>
+                                <span>炊事用品</span>
+                                <span>装饰用品</span>
+                                <span>化妆用品</span>
+                                <span>床上用品</span>
+                            </div>
+                        </li>
+                        <li><a>商品<span>服装</span><span>鞋靴</span><i>&gt;</i></a>
+                            <div>
+                                <span>男服</span>
+                                <span>女服</span>
+                                <span>中老年人服</span>
+                                <span>儿童服</span>
+                                <span>幼童服</span>
+                                <span>男服</span>
+                                <span>女服</span>
+                                <span>中老年人服</span>
+                                <span>儿童服</span>
+                                <span>幼童服</span>
+                                <span>男服</span>
+                                <span>女服</span>
+                                <span>中老年人服</span>
+                                <span>儿童服</span>
+                                <span>幼童服</span>
+                                <span>男服</span>
+                                <span>女服</span>
+                                <span>中老年人服</span>
+                                <span>儿童服</span>
+                                <span>幼童服</span>
+                            </div>
+                        </li>
+                        <li><a>热门搜索<span>美食</span><span>游泳</span><span>美食</span><span>游泳</span></a>
+                        </li>
+                    </ul>
+                </div>
+            </li>
+            <hr>
+            <li>
+                <a>
+                    <span class="top">企业文化</span>
+                    <span class="bottm">企业文化</span>
+                </a>
+            </li>
+            <hr>
+            <li>
+                <a href="">
+                    <span class="top">产品展示</span>
+                    <span class="bottm">产品展示</span>
+                </a>
+                <div class="li-box">
+                    <ul>
+                        <li>普通产品</li>
+                        <li>会员产品</li>
+                        <li>普通产品</li>
+                        <li>会员产品</li>
+                        <li>普通产品</li>
+                        <li>会员产品</li>
+                    </ul>
+                </div>
+            </li>
+            <hr>
+            <li>
+                <a href="">
+                    <span class="top">新闻中心</span>
+                    <span class="bottm">新闻中心</span>
+                </a>
+                <div class="li-box">
+                    <ul>
+                        <li>娱乐新闻</li>
+                        <li>政治新闻</li>
+                        <li>社会新闻</li>
+                        <li>娱乐新闻</li>
+                        <li>政治新闻</li>
+                        <li>社会新闻</li>
+                    </ul>
+                </div>
+            </li>
+            <hr>
+            <li>
+                <a href="">
+                    <span class="top">阳光服务</span>
+                    <span class="bottm">阳光服务</span>
+                </a>
+                <div class="li-box">
+                    <ul>
+                        <li>123</li>
+                        <li>456</li>
+                        <li>789</li>
+                    </ul>
+                </div>
+            </li>
+            <hr>
+            <li>
+                <a href="">
+                    <span class="top">加盟代理</span>
+                    <span class="bottm">加盟代理</span>
+                </a>
+                <div class="li-box">
+                    <ul>
+                        <li>联系网址：www.123.com</li>
+                        <li>加盟须知</li>
+                        <li>了解以下</li>
+                    </ul>
+                </div>
+            </li>
+            <hr>
+            <li>
+                <a href="">
+                    <span class="top">在线咨询</span>
+                    <span class="bottm">在线咨询</span>
+                </a>
+                <div class="li-box">
+                    <ul>
+                        <li>邮箱：123</li>
+                        <li>电话：123</li>
+                        <li>微信：123</li>
+                    </ul>
+                </div>
+            </li>
+            <hr>
+            <li>
+                <a>
+                    <span class="top">企业文化</span>
+                    <span class="bottm">企业文化</span>
+                </a>
+            </li>
+            <hr>
+            <li>
+                <a>
+                    <span class="top">企业文化</span>
+                    <span class="bottm">企业文化</span>
+                </a>
+            </li>
+            <hr>
+        </ul>
+    </div>
+
+
+
+</body></html>
