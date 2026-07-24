@@ -8,9 +8,21 @@
 :root {
   /* —— 背景与卡片 —— */
   --bagColor: #0a0e18;          /* body 主背景（深空蓝黑） */
-  --headerCOlor: #161b22;      /* header / 卡片背景 */
-  --headerhover: rgba(22, 27, 34, .85); /* 卡片悬停态背景 */
+  --headerCOlor: rgba(22, 27, 34, 0.55); /* header / 卡片背景（半透明，配合毛玻璃） */
+  --headerhover: rgba(22, 27, 34, 0.75); /* 卡片悬停态背景（加深一点） */
   --borderline: #30363d;       /* 顶部装饰条 / 边框 */
+
+  /* —— 毛玻璃设计系统（Glass Morphism）——
+   * 参考知乎毛玻璃设计文章 + Apple Liquid Glass 美学
+   * 三要素：半透明背景 + backdrop-filter 模糊 + 顶部高光边框
+   * 背景已由 body 的网格+渐变提供参照物 */
+  --glass-bg: rgba(22, 27, 34, 0.55);     /* 玻璃背景（深色：半透明深灰） */
+  --glass-bg-hover: rgba(22, 27, 34, 0.75); /* 玻璃悬停态 */
+  --glass-blur: 16px;                       /* 模糊半径（参考 Apple 14-20px） */
+  --glass-border: 1px solid rgba(255, 255, 255, 0.10); /* 边框：微弱白光 */
+  --glass-border-hover: 1px solid rgba(91, 158, 255, 0.45); /* 悬停边框：主色微光 */
+  --glass-shadow: 0 8px 32px rgba(0, 0, 0, 0.25); /* 柔和投影 */
+  --glass-shadow-hover: 0 12px 48px rgba(0, 0, 0, 0.35), 0 4px 12px rgba(91, 158, 255, 0.12); /* 悬停投影+主色辉光 */
 
   /* 科技感背景：径向渐变主色光晕 + 细密网格线
    * 让毛玻璃卡片有参照物，凸显 glass morphism 效果 */
@@ -76,8 +88,8 @@
  */
 :root[data-theme="light"] {
   --bagColor: #eef2f8;          /* 冷调浅蓝灰（比纯白更有科技感） */
-  --headerCOlor: #ffffff;
-  --headerhover: rgba(255, 255, 255, 0.85);
+  --headerCOlor: rgba(255, 255, 255, 0.60); /* 半透明白，配合毛玻璃 */
+  --headerhover: rgba(255, 255, 255, 0.80); /* 悬停态更实一些 */
   --borderline: #d0d7de;
 
   --headerFont: #1f2328;
@@ -88,6 +100,15 @@
   --mainColor: #1e40af;        /* Sapphire Blue（浅色主题偏深，保证对比度） */
   --mainColor-soft: rgba(30, 64, 175, 0.08);
   --mainColor-rgb: 30, 64, 175;
+
+  /* 浅色毛玻璃：白色半透明 + 更深的阴影对比 */
+  --glass-bg: rgba(255, 255, 255, 0.60);
+  --glass-bg-hover: rgba(255, 255, 255, 0.80);
+  --glass-blur: 16px;
+  --glass-border: 1px solid rgba(255, 255, 255, 0.60); /* 白色高光边框 */
+  --glass-border-hover: 1px solid rgba(30, 64, 175, 0.40);
+  --glass-shadow: 0 8px 32px rgba(31, 35, 40, 0.10);
+  --glass-shadow-hover: 0 12px 48px rgba(31, 35, 40, 0.15), 0 4px 12px rgba(30, 64, 175, 0.10);
 
   /* 浅色科技感背景：冷蓝光晕 + 细网格
    * 让毛玻璃卡片有更多视觉纹理参照 */
@@ -192,18 +213,21 @@ a:hover {
 
 
 .carbox {
-  background-color: var(--headerCOlor);
+  background-color: var(--glass-bg);
   border-radius: var(--card-radius);
-  border: var(--card-border);
-  box-shadow: var(--card-shadow);
-  transition: border-color .3s ease, box-shadow .3s ease, transform .3s ease;
+  border: var(--glass-border);
+  box-shadow: var(--glass-shadow);
+  backdrop-filter: blur(var(--glass-blur));
+  -webkit-backdrop-filter: blur(var(--glass-blur));
+  transition: border-color .3s ease, box-shadow .3s ease, transform .3s ease, background-color .3s ease;
 }
 
-/* 卡片悬停态：边框变琥珀金 + 轻微上浮 */
+/* 卡片悬停态：边框变主色 + 轻微上浮 + 背景稍实 */
 .carbox:hover {
-  border: var(--card-border-hover);
-  box-shadow: var(--card-shadow-hover);
+  border: var(--glass-border-hover);
+  box-shadow: var(--glass-shadow-hover);
   transform: translateY(-2px);
+  background-color: var(--glass-bg-hover);
 }
 
 ul {
@@ -238,9 +262,12 @@ img {
   width: 100%;
   height: 70px;
   line-height: 70px;
-  background-color: var(--headerCOlor);
+  background-color: var(--glass-bg);
   border-radius: 0% 0% 10px 10px;
-  box-shadow: 0 2px 4px 0 rgb(0 0 0 / 15%);
+  border-bottom: var(--glass-border);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+  backdrop-filter: blur(var(--glass-blur));
+  -webkit-backdrop-filter: blur(var(--glass-blur));
 }
 
 /* 下面的装饰 */
@@ -543,20 +570,20 @@ img {
   min-height: 720px;
   border-radius: var(--card-radius);
   text-align: center;
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.25);
-  background-color: rgba(22, 27, 34, 0.55);
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
+  border: var(--glass-border);
+  box-shadow: var(--glass-shadow);
+  background-color: var(--glass-bg);
+  backdrop-filter: blur(var(--glass-blur));
+  -webkit-backdrop-filter: blur(var(--glass-blur));
   padding: 0px 30px;
   box-sizing: border-box;
 }
 
-/* 浅色主题下卡片玻璃效果：使用白色半透明 */
+/* 浅色主题下卡片玻璃效果：使用统一 glass token */
 :root[data-theme="light"] .content .me-card {
-  border: 1px solid rgba(31, 35, 40, 0.10);
-  background-color: rgba(255, 255, 255, 0.60);
-  box-shadow: 0 8px 32px rgba(31, 35, 40, 0.10);
+  border: var(--glass-border);
+  background-color: var(--glass-bg);
+  box-shadow: var(--glass-shadow);
 }
 
 /* 滚动后不再使用固定定位顶出屏幕，直接用 sticky 即可 */
