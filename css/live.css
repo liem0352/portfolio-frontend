@@ -10,18 +10,21 @@
   position: relative;
   margin-bottom: var(--space-2xl);
   height: 180px;
-  background-color: var(--headerCOlor);
+  background-color: var(--glass-bg);
   border-radius: var(--card-radius);
-  border: var(--card-border);
-  box-shadow: var(--card-shadow);
-  transition: border-color .3s ease, box-shadow .3s ease, transform .3s ease;
+  border: var(--glass-border);
+  box-shadow: var(--glass-shadow);
+  backdrop-filter: blur(var(--glass-blur));
+  -webkit-backdrop-filter: blur(var(--glass-blur));
+  transition: border-color .3s ease, box-shadow .3s ease, transform .3s ease, background-color .3s ease;
 }
 
 /* 生活照片卡悬停态 */
 .li2-box-item:hover {
-  border: var(--card-border-hover);
-  box-shadow: var(--card-shadow-hover);
+  border: var(--glass-border-hover);
+  box-shadow: var(--glass-shadow-hover);
   transform: translateY(-3px);
+  background-color: var(--glass-bg-hover);
 }
 .li2-box-item:hover img{
   transform: scale(1);
@@ -63,22 +66,25 @@
 .content-li.li1>.li1-box {
   position: relative;
   flex: 0 0 32%;
-  background-color: var(--headerCOlor);
+  background-color: var(--glass-bg);
   min-height: 150px;
   text-align: center;
   border-radius: var(--card-radius);
-  border: var(--card-border);
-  box-shadow: var(--card-shadow);
+  border: var(--glass-border);
+  box-shadow: var(--glass-shadow);
+  backdrop-filter: blur(var(--glass-blur));
+  -webkit-backdrop-filter: blur(var(--glass-blur));
   padding: var(--space-xl) var(--space-lg);
   box-sizing: border-box;
-  transition: border-color .3s ease, box-shadow .3s ease, transform .3s ease;
+  transition: border-color .3s ease, box-shadow .3s ease, transform .3s ease, background-color .3s ease;
 }
 
 /* 生活页统计卡悬停态 */
 .content-li.li1>.li1-box:hover {
-  border: var(--card-border-hover);
-  box-shadow: var(--card-shadow-hover);
+  border: var(--glass-border-hover);
+  box-shadow: var(--glass-shadow-hover);
   transform: translateY(-2px);
+  background-color: var(--glass-bg-hover);
 }
 
 .li1-box>span {
@@ -96,6 +102,7 @@
   margin-left: 5px;
   font-size: 18px;
   background-color: var(--mainColor);
+  color: #ffffff; /* 标签徽章文字强制白色 */
 }
 
 .li1-box>p {
