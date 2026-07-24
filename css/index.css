@@ -7,23 +7,26 @@
 .content-li.li1>.li1-box {
   position: relative;
   flex: 0 0 32%;
-  background-color: var(--headerCOlor);
+  background-color: var(--glass-bg);
   min-height: 200px;
   text-align: center;
   border-radius: var(--card-radius);
-  border: var(--card-border);
-  box-shadow: var(--card-shadow);
+  border: var(--glass-border);
+  box-shadow: var(--glass-shadow);
+  backdrop-filter: blur(var(--glass-blur));
+  -webkit-backdrop-filter: blur(var(--glass-blur));
   padding: var(--space-xl) var(--space-lg);
   box-sizing: border-box;
-  transition: border-color .3s ease, box-shadow .3s ease, transform .3s ease;
+  transition: border-color .3s ease, box-shadow .3s ease, transform .3s ease, background-color .3s ease;
 
 }
 
-/* 统计卡悬停态：边框变琥珀金 + 轻微上浮 */
+/* 统计卡悬停态：边框变主色 + 轻微上浮 + 背景稍实 */
 .content-li.li1>.li1-box:hover {
-  border: var(--card-border-hover);
-  box-shadow: var(--card-shadow-hover);
+  border: var(--glass-border-hover);
+  box-shadow: var(--glass-shadow-hover);
   transform: translateY(-3px);
+  background-color: var(--glass-bg-hover);
 }
 
 .li1-box>span {
@@ -125,7 +128,7 @@
   line-height: 60px;
   border-radius: 50%;
   background-color: var(--mainColor);
-  color: var(--fontColor); /* 按钮文字反差色，跟随主题切换 */
+  color: #ffffff; /* 播放按钮文字强制白色 */
   text-align: center;
   font-weight: bold;
   font-size: 30px;
@@ -177,21 +180,24 @@
   flex: 0 0 48%;
   min-height: 250px;
   margin-bottom: var(--space-md);
-  background-color: var(--headerCOlor);
+  background-color: var(--glass-bg);
   border-radius: var(--card-radius);
-  border: var(--card-border);
-  box-shadow: var(--card-shadow);
+  border: var(--glass-border);
+  box-shadow: var(--glass-shadow);
+  backdrop-filter: blur(var(--glass-blur));
+  -webkit-backdrop-filter: blur(var(--glass-blur));
   font-weight: 500;
   letter-spacing: .05em;
   -webkit-font-smoothing: antialiased;
-  transition: border-color .3s ease, box-shadow .3s ease, transform .3s ease;
+  transition: border-color .3s ease, box-shadow .3s ease, transform .3s ease, background-color .3s ease;
 }
 
 /* 技能卡悬停态 */
 .li4-box>div:hover {
-  border: var(--card-border-hover);
-  box-shadow: var(--card-shadow-hover);
+  border: var(--glass-border-hover);
+  box-shadow: var(--glass-shadow-hover);
   transform: translateY(-2px);
+  background-color: var(--glass-bg-hover);
 }
 
 .li4-box>div p {
@@ -323,18 +329,21 @@ svg {
   overflow: hidden;
   flex: 0 0 48%;
   margin-bottom: var(--space-lg);
-  background-color: var(--headerCOlor);
+  background-color: var(--glass-bg);
   border-radius: var(--card-radius);
-  border: var(--card-border);
-  box-shadow: var(--card-shadow);
-  transition: border-color .3s ease, box-shadow .3s ease, transform .3s ease;
+  border: var(--glass-border);
+  box-shadow: var(--glass-shadow);
+  backdrop-filter: blur(var(--glass-blur));
+  -webkit-backdrop-filter: blur(var(--glass-blur));
+  transition: border-color .3s ease, box-shadow .3s ease, transform .3s ease, background-color .3s ease;
 }
 
 /* 文章卡悬停态 */
 .li6-box>div:hover {
-  border: var(--card-border-hover);
-  box-shadow: var(--card-shadow-hover);
+  border: var(--glass-border-hover);
+  box-shadow: var(--glass-shadow-hover);
   transform: translateY(-3px);
+  background-color: var(--glass-bg-hover);
 }
 
 .li6-box .borderbotm {
