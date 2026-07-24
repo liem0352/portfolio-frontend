@@ -454,7 +454,10 @@ img {
   margin: 0 auto;
   display: flex;
   gap: var(--space-xl);
-  padding: var(--space-3xl) 0;
+  /* 负向上移，让左侧 me-card 与 Hero 背景图底部自然重叠 */
+  padding: 0 0 var(--space-3xl);
+  margin-top: -180px;
+  z-index: 2;
   /* background-color: rgba(10, 15, 20, 0.2); */
 }
 
