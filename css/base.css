@@ -534,12 +534,12 @@ img {
   top: 100px;
 }
 
-/* 右栏：内容流占满剩余空间，顶部留出 Hero 露出区域 */
+/* 右栏：内容流占满剩余空间，从 Hero 底部开始，避免压住文字 */
 .content .co-right {
   flex: 1;
   min-width: 0;
   width: auto;
-  padding-top: 180px;
+  padding-top: 340px;
 }
 
 
