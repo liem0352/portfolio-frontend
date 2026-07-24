@@ -5,14 +5,25 @@
 (function () {
   'use strict';
 
-  // DOM 加载完成后初始化
-  document.addEventListener('DOMContentLoaded', function () {
-    initLoader();
+  // 立即执行初始化（确保无论脚本加载时机都能正常工作）
+  initLoader();
+
+  // DOM 加载完成后初始化其余功能
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init);
+  } else {
+    init();
+  }
+
+  /**
+   * 初始化所有功能
+   */
+  function init() {
     initNavbar();
     initMobileMenu();
     initScrollAnimations();
     initSmoothScroll();
-  });
+  }
 
   /**
    * 初始化页面加载动画
@@ -22,10 +33,29 @@
     var loader = document.getElementById('loader');
     if (!loader) return;
 
-    if (document.readyState === 'complete') {
+    function hide() {
       hideLoader();
+    }
+
+    // 兜底方案：3秒后强制隐藏，防止一直卡在加载状态
+    setTimeout(hide, 3000);
+
+    if (document.readyState === 'complete') {
+      // 页面已经加载完成，直接隐藏
+      setTimeout(hide, 300);
     } else {
-      window.addEventListener('load', hideLoader);
+      // 等待页面加载完成
+      window.addEventListener('load', function () {
+        setTimeout(hide, 300);
+      });
+      // DOM 就绪也触发一次（防止某些资源加载失败导致 load 事件不触发）
+      if (document.readyState === 'interactive') {
+        setTimeout(hide, 800);
+      } else {
+        document.addEventListener('DOMContentLoaded', function () {
+          setTimeout(hide, 800);
+        });
+      }
     }
   }
 
@@ -36,8 +66,7 @@
     var loader = document.getElementById('loader');
     if (!loader) return;
 
-    loader.style.opacity = '0';
-    loader.style.transition = 'opacity 0.5s ease';
+    loader.classList.add('hidden');
     setTimeout(function () {
       loader.style.display = 'none';
     }, 500);

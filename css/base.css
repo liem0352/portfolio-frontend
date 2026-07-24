@@ -813,6 +813,15 @@ input, textarea, select {
   align-items: center;
   justify-content: center;
   transition: opacity var(--duration-slow) var(--ease-out);
+  animation: loaderAutoHide 0.5s ease-in-out 2s forwards;
+}
+
+@keyframes loaderAutoHide {
+  to {
+    opacity: 0;
+    pointer-events: none;
+    visibility: hidden;
+  }
 }
 
 .loader.hidden {
