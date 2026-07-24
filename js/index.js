@@ -1,79 +1,121 @@
+/**
+ * 首页脚本
+ * 包含首页特定的交互功能
+ */
 (function () {
-  // 获取元素 '.li5box-car' 的宽度，并加上 7 像素的偏移量
-  var witdhDefual = parseFloat($('.li5box-car').css('width').replace(/[^0-9\-,]/g, '')) + 7
-  // 获取 '.li5box-ul' 下所有 '.li5box-car' 的数量
-  let num = $('.li5box-ul .li5box-car').length;
-  // 设置 '.li5box-ul' 的宽度为车辆数量乘以单个车辆的宽度
-  $('.li5box-ul').css('width', (num) * witdhDefual + 'px');
-  // 计算最大偏移量
-  var MAX = (num - 1) * witdhDefual
+  'use strict';
 
-  // 左箭头点击事件
-  $('#leftimg').click(function () {
-    // 获取当前的偏移量
-    let value = parseFloat($('#li5boxul').css("transform").replace(/[^0-9\-,]/g, '').split(',')[4])
-    
-    // 如果偏移量小于等于 0，取反值
-    if (value <= 0) {
-      value = value * -1
+  document.addEventListener('DOMContentLoaded', function () {
+    initHeroParallax();
+    initStatsCounter();
+  });
+
+  /**
+   * 初始化 Hero 区域视差效果
+   * 鼠标移动时背景轻微偏移
+   */
+  function initHeroParallax() {
+    var hero = document.querySelector('.hero');
+    if (!hero) return;
+
+    var heroBg = hero.querySelector('.hero__bg');
+    if (!heroBg) return;
+
+    var isHovering = false;
+
+    hero.addEventListener('mouseenter', function () {
+      isHovering = true;
+    });
+
+    hero.addEventListener('mouseleave', function () {
+      isHovering = false;
+      heroBg.style.transform = 'translate(0, 0) scale(1.05)';
+    });
+
+    hero.addEventListener('mousemove', function (e) {
+      if (!isHovering) return;
+
+      var rect = hero.getBoundingClientRect();
+      var x = (e.clientX - rect.left) / rect.width - 0.5;
+      var y = (e.clientY - rect.top) / rect.height - 0.5;
+
+      var moveX = x * 20;
+      var moveY = y * 20;
+
+      heroBg.style.transform = 'translate(' + moveX + 'px, ' + moveY + 'px) scale(1.05)';
+    });
+  }
+
+  /**
+   * 初始化统计数字计数动画
+   * 数字从 0 滚动到目标值
+   */
+  function initStatsCounter() {
+    var statNumbers = document.querySelectorAll('.stat-card__number');
+    if (statNumbers.length === 0) return;
+
+    if (!('IntersectionObserver' in window)) {
+      return;
     }
- 
-    // 如果偏移量大于或等于最大偏移量，返回
-    if (value >= MAX) {
-      return false
+
+    var observer = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) {
+          animateNumber(entry.target);
+          observer.unobserve(entry.target);
+        }
+      });
+    }, {
+      threshold: 0.5
+    });
+
+    statNumbers.forEach(function (el) {
+      observer.observe(el);
+    });
+  }
+
+  /**
+   * 数字滚动动画
+   * @param {HTMLElement} el - 数字元素
+   */
+  function animateNumber(el) {
+    var text = el.textContent.trim();
+    var isInfinity = text === '∞';
+
+    if (isInfinity) {
+      el.style.opacity = '0';
+      el.style.transform = 'scale(0.5)';
+      el.style.transition = 'all 0.6s cubic-bezier(0.34, 1.56, 0.64, 1)';
+      requestAnimationFrame(function () {
+        el.style.opacity = '1';
+        el.style.transform = 'scale(1)';
+      });
+      return;
     }
 
-    // 计算下一个偏移量并应用到 '.li5boxul'
-    let result = parseFloat(value + witdhDefual) * -1
-    $('#li5boxul').css('transform', 'translate3d(' + result + 'px,0px,0px)');
-  })
+    var match = text.match(/(\d+)(.*)/);
+    if (!match) return;
 
-  // 右箭头点击事件
-  $('#rightimg').click(function () {
-    // 获取当前的偏移量
-    let value = parseFloat($('#li5boxul').css("transform").replace(/[^0-9\-,]/g, '').split(',')[4])
-    
-    // 如果偏移量大于或等于 0，或小于最大偏移量的负值，返回
-    if (value >= 0 || value < MAX * -1) {
-      return false
+    var target = parseInt(match[1], 10);
+    var suffix = match[2] || '';
+    var duration = 1500;
+    var startTime = null;
+
+    function step(timestamp) {
+      if (!startTime) startTime = timestamp;
+      var progress = Math.min((timestamp - startTime) / duration, 1);
+
+      // 使用 easeOutQuart 缓动函数
+      var eased = 1 - Math.pow(1 - progress, 4);
+      var current = Math.floor(eased * target);
+
+      el.textContent = current + suffix;
+
+      if (progress < 1) {
+        requestAnimationFrame(step);
+      }
     }
-   
-    // 计算下一个偏移量并应用到 '.li5boxul'
-    let result = parseFloat(value + witdhDefual)
-    $('#li5boxul').css('transform', 'translate3d(' + result + 'px,0px,0px)')
-  })
 
-  // 播放按钮点击事件
-  $('#playbuttom').click(function () {
-    // 给 '#zhezhao' 添加 'active' 类
-    $('#zhezhao').addClass('active')
-    // 播放视频
-    document.getElementById('videoResumeC').play();
-  })
-
-  // 音乐包装点击事件
-  $('#musicwrap').click(function () {
-    console.log(14563)
-    // 判断音乐是否处于暂停状态
-    if ($(this).hasClass('paused')) {
-      // 如果暂停，移除 'paused' 类并播放音乐
-      $(this).removeClass('paused')
-      $('#play1')[0].play()
-    } else {
-      // 如果正在播放，添加 'paused' 类并暂停音乐
-      $(this).addClass('paused')
-      $('#play1')[0].pause()
-    }
-  })
-
-  // // 正则表达式，匹配所有包含 '_min.' 的图片 src 属性
-  // var test = /_min\./
-  // // 遍历所有的图片节点
-  // $("img").each(function(index,obj){	
-  // 	if(test.test($(this).attr("src"))){
-  // 		var reSrc = $(this).attr("src").replace(test,".");
-  // 		$(this).attr("src",reSrc)
-  // 	}		
-  // })
-
-})()
+    requestAnimationFrame(step);
+  }
+})();
