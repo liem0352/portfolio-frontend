@@ -338,6 +338,7 @@ img {
 }
 /* 默认主题（深色） */
 .navigation {
+  position: relative;
   margin: 0px auto 0;
   width: 95%;
   background-color: transparent;
@@ -345,18 +346,32 @@ img {
   border-radius: 20px;
   background-image: url("../img/back/a58cbbffd2aa49c1b1e99990be912f30.jpg");
   background-attachment: fixed;
-  background-size: 100%;
+  background-size: cover;
+  background-position: center;
   background-repeat: no-repeat;
   overflow: hidden;
   color: var(--heroFont); /* hero 区域文字色跟随主题 */
 }
+/* 深色主题：左侧叠加暗色渐变蒙版，让文字嵌在山景左侧暗部 */
+.navigation::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, rgba(13, 17, 23, 0.82) 0%, rgba(13, 17, 23, 0.45) 45%, transparent 70%);
+  pointer-events: none;
+  z-index: 0;
+}
 /* 浅色主题：hero 区域换成更柔和的浅色背景图，并叠加半透明冷白滤镜提升对比度 */
 :root[data-theme="light"] .navigation {
-  background-image: linear-gradient(rgba(245, 247, 250, 0.55), rgba(245, 247, 250, 0.65)), url("../img/back/a58cbbffd2aa49c1b1e99990be912f30.jpg");
+  background-image: linear-gradient(rgba(245, 247, 250, 0.45), rgba(245, 247, 250, 0.55)), url("../img/back/a58cbbffd2aa49c1b1e99990be912f30.jpg");
   background-blend-mode: normal;
 }
 :root[data-theme="light"] .navigation.active {
-  background-image: linear-gradient(rgba(245, 247, 250, 0.55), rgba(245, 247, 250, 0.65)), url("../img/back/aitx6-0og08.webp") !important;
+  background-image: linear-gradient(rgba(245, 247, 250, 0.45), rgba(245, 247, 250, 0.55)), url("../img/back/aitx6-0og08.webp") !important;
+}
+/* 浅色主题：左侧叠加柔和的冷白渐变，让深色文字在山景亮部上仍可读 */
+:root[data-theme="light"] .navigation::before {
+  background: linear-gradient(90deg, rgba(245, 247, 250, 0.88) 0%, rgba(245, 247, 250, 0.55) 40%, transparent 70%);
 }
 
 /* 顶部导航 */
@@ -368,23 +383,35 @@ img {
   margin: 10px 0;
   font-size: 3.8rem;
   color: var(--heroFont); /* hero 文字色跟随主题 */
-  text-shadow: 0 1px 10px rgb(0 0 0 / 30%);
+  text-shadow: 0 2px 20px rgba(0, 0, 0, 0.35);
+  position: relative;
+  z-index: 1;
 }
-/* 浅色主题下 hero 描边光晕改为浅色，保证深色文字在浅背景上仍可读 */
+/* 浅色主题下 hero 描边光晕增强，避免亮色山峰干扰文字 */
 :root[data-theme="light"] .navigation h1 {
-  text-shadow: 0 1px 12px rgba(255, 255, 255, 0.6);
+  text-shadow: 0 2px 16px rgba(245, 247, 250, 0.8), 0 1px 4px rgba(255, 255, 255, 0.6);
 }
 .navigation,
 .navigation .buttom,
 .navigation .nav-titleBox {
   color: var(--heroFont);
+  position: relative;
+  z-index: 1;
 }
 .navigation .buttom:hover{
   transform: scale(1.1);
   color: var(--heroFont);
 }
 .navigation>.nav-titleBox {
-  margin-top: 18rem;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  height: 100%;
+  width: auto;
+  margin: 0;
+  padding-left: 8%;
+  box-sizing: border-box;
 }
 
 .nav-titleBox .buttom {
@@ -398,6 +425,11 @@ img {
   transition: transform .3s ease;
   color: var(--heroFont);
   position: relative;
+  background-color: rgba(var(--mainColor-rgb), 0.1);
+  backdrop-filter: blur(4px);
+}
+.nav-titleBox .buttom:hover {
+  background-color: rgba(var(--mainColor-rgb), 0.2);
 }
 .nav-titleBox .buttom::after{
   position: absolute;
@@ -454,10 +486,7 @@ img {
   margin: 0 auto;
   display: flex;
   gap: var(--space-xl);
-  /* 负向上移，让左侧 me-card 与 Hero 背景图底部自然重叠 */
-  padding: 0 0 var(--space-3xl);
-  margin-top: -180px;
-  z-index: 2;
+  padding: var(--space-3xl) 0;
   /* background-color: rgba(10, 15, 20, 0.2); */
 }
 
