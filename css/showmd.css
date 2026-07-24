@@ -1,0 +1,343 @@
+/* ============================================
+   Markdown 展示页面样式 ShowMD Page Styles
+   ============================================ */
+
+/* 页面布局 */
+.md-page {
+  min-height: 100vh;
+  padding: var(--space-8) 0;
+}
+
+.md-container {
+  max-width: 860px;
+  margin: 0 auto;
+  padding: 0 var(--content-padding-x);
+}
+
+/* 返回按钮 */
+.md-back {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-2) var(--space-4);
+  margin-bottom: var(--space-6);
+  font-size: var(--text-sm);
+  color: var(--text-secondary);
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-md);
+  transition: all var(--duration-fast) var(--ease-default);
+}
+
+.md-back:hover {
+  color: var(--accent-primary);
+  border-color: var(--accent-primary);
+  background: var(--accent-soft);
+  transform: translateX(-2px);
+}
+
+.md-back svg {
+  width: 16px;
+  height: 16px;
+}
+
+/* Markdown 内容容器 */
+#content {
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-xl);
+  padding: var(--space-12) var(--space-16);
+  box-shadow: var(--shadow-lg);
+}
+
+/* Markdown 标题样式 */
+#content h1,
+#content h2,
+#content h3,
+#content h4,
+#content h5,
+#content h6 {
+  color: var(--text-primary);
+  font-weight: var(--weight-bold);
+  line-height: var(--leading-tight);
+  margin-top: var(--space-8);
+  margin-bottom: var(--space-4);
+}
+
+#content h1:first-child,
+#content h2:first-child,
+#content h3:first-child {
+  margin-top: 0;
+}
+
+#content h1 {
+  font-size: var(--text-4xl);
+  padding-bottom: var(--space-4);
+  border-bottom: 2px solid var(--border-default);
+}
+
+#content h2 {
+  font-size: var(--text-3xl);
+  padding-bottom: var(--space-3);
+  border-bottom: 1px solid var(--border-default);
+}
+
+#content h3 {
+  font-size: var(--text-2xl);
+}
+
+#content h4 {
+  font-size: var(--text-xl);
+}
+
+#content h5 {
+  font-size: var(--text-lg);
+}
+
+#content h6 {
+  font-size: var(--text-base);
+  color: var(--text-secondary);
+}
+
+/* 段落 */
+#content p {
+  color: var(--text-secondary);
+  font-size: var(--text-base);
+  line-height: var(--leading-relaxed);
+  margin-bottom: var(--space-4);
+}
+
+/* 链接 */
+#content a {
+  color: var(--accent-primary);
+  text-decoration: none;
+  border-bottom: 1px solid var(--accent-soft);
+  transition: all var(--duration-fast) var(--ease-default);
+}
+
+#content a:hover {
+  color: var(--accent-hover);
+  border-bottom-color: var(--accent-primary);
+}
+
+/* 强调文本 */
+#content strong {
+  color: var(--text-primary);
+  font-weight: var(--weight-semibold);
+}
+
+#content em {
+  font-style: italic;
+  color: var(--text-secondary);
+}
+
+#content mark {
+  background: var(--accent-soft);
+  color: var(--accent-primary);
+  padding: 0.1em 0.3em;
+  border-radius: var(--radius-sm);
+}
+
+/* 引用块 */
+#content blockquote {
+  margin: var(--space-6) 0;
+  padding: var(--space-4) var(--space-6);
+  background: var(--bg-tertiary);
+  border-left: 4px solid var(--accent-primary);
+  border-radius: 0 var(--radius-md) var(--radius-md) 0;
+  color: var(--text-secondary);
+}
+
+#content blockquote p {
+  margin-bottom: 0;
+  color: var(--text-secondary);
+}
+
+/* 代码行内 */
+#content code {
+  font-family: var(--font-mono);
+  font-size: 0.875em;
+  padding: 0.2em 0.4em;
+  background: var(--bg-tertiary);
+  color: var(--accent-primary);
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border-default);
+}
+
+/* 代码块 */
+#content pre {
+  margin: var(--space-6) 0;
+  padding: var(--space-6) !important;
+  background: var(--bg-primary) !important;
+  border: 1px solid var(--border-default) !important;
+  border-radius: var(--radius-lg) !important;
+  overflow-x: auto;
+  position: relative;
+}
+
+#content pre code {
+  padding: 0;
+  background: transparent;
+  border: none;
+  color: var(--text-primary);
+  font-size: var(--text-sm);
+  line-height: 1.7;
+}
+
+/* Prism 行号样式覆盖 */
+#content pre.line-numbers {
+  padding-left: var(--space-12) !important;
+}
+
+#content .line-numbers .line-numbers-rows {
+  padding: var(--space-6) 0;
+  border-right: 1px solid var(--border-default) !important;
+  color: var(--text-tertiary);
+}
+
+#content .line-numbers-rows > span:before {
+  color: var(--text-muted) !important;
+}
+
+/* 表格 */
+#content table {
+  width: 100%;
+  margin: var(--space-6) 0;
+  border-collapse: collapse;
+  font-size: var(--text-sm);
+}
+
+#content table th,
+#content table td {
+  padding: var(--space-3) var(--space-4);
+  text-align: left;
+  border: 1px solid var(--border-default);
+}
+
+#content table th {
+  background: var(--bg-tertiary);
+  color: var(--text-primary);
+  font-weight: var(--weight-semibold);
+}
+
+#content table tr:nth-child(even) td {
+  background: var(--bg-secondary);
+}
+
+#content table tr:hover td {
+  background: var(--bg-tertiary);
+}
+
+/* 列表 */
+#content ul,
+#content ol {
+  margin: var(--space-4) 0;
+  padding-left: var(--space-6);
+  color: var(--text-secondary);
+}
+
+#content ul {
+  list-style: disc;
+}
+
+#content ol {
+  list-style: decimal;
+}
+
+#content li {
+  margin-bottom: var(--space-2);
+  line-height: var(--leading-relaxed);
+}
+
+#content li::marker {
+  color: var(--accent-primary);
+}
+
+/* 嵌套列表 */
+#content ul ul,
+#content ol ol,
+#content ul ol,
+#content ol ul {
+  margin: var(--space-2) 0;
+}
+
+/* 图片 */
+#content img {
+  max-width: 100%;
+  height: auto;
+  border-radius: var(--radius-lg);
+  margin: var(--space-6) auto;
+  display: block;
+  box-shadow: var(--shadow-md);
+}
+
+#content figure {
+  margin: var(--space-6) 0;
+  text-align: center;
+}
+
+#content figure figcaption {
+  margin-top: var(--space-3);
+  font-size: var(--text-sm);
+  color: var(--text-tertiary);
+}
+
+/* 分割线 */
+#content hr {
+  margin: var(--space-8) 0;
+  border: none;
+  height: 1px;
+  background: var(--border-default);
+}
+
+/* 任务列表 */
+#content input[type="checkbox"] {
+  margin-right: var(--space-2);
+  accent-color: var(--accent-primary);
+}
+
+#content li:has(input[type="checkbox"]) {
+  list-style: none;
+  margin-left: -var(--space-6);
+}
+
+/* ============================================
+   响应式 Responsive
+   ============================================ */
+
+@media (max-width: 768px) {
+  #content {
+    padding: var(--space-8) var(--space-6);
+  }
+
+  #content h1 {
+    font-size: var(--text-3xl);
+  }
+
+  #content h2 {
+    font-size: var(--text-2xl);
+  }
+
+  #content h3 {
+    font-size: var(--text-xl);
+  }
+}
+
+@media (max-width: 480px) {
+  .md-page {
+    padding: var(--space-4) 0;
+  }
+
+  #content {
+    padding: var(--space-6) var(--space-4);
+  }
+
+  #content table {
+    font-size: var(--text-xs);
+  }
+
+  #content table th,
+  #content table td {
+    padding: var(--space-2) var(--space-3);
+  }
+}

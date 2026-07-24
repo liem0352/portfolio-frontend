@@ -1,488 +1,440 @@
-﻿<!DOCTYPE html>
-<html lang="en">
+<!DOCTYPE html>
+<html lang="zh-CN">
 
 <head>
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>YB的小窝</title>
+  <meta name="description" content="LIEM - 全栈开发者个人作品集，展示前端、后端、系统维护等技术能力">
+  <title>LIEM | 全栈开发者作品集</title>
   <link rel="stylesheet" href="./css/base.css">
-  <script src="./js/jq.js"></script>
   <link rel="stylesheet" href="./css/index.css">
-
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 </head>
 
 <body>
-
-  <div class="music-wrap" id="musicwrap">
-    <audio id="play1" controls>
-      <source src="./img/music.mp3">
-    </audio>
-  </div>
-
-
+  <!-- Canvas 背景特效 -->
   <canvas class="canvas-wrap" id="triangle-lost-in-space" resize="true"></canvas>
 
-  <!-- loadding -->
-  <div class="lodding-wrap">
-    <div class="loadding-div"></div>
-  </div>
-  <!-- 遮罩层 -->
-  <div class="zhezhao" id="zhezhao">
-    <span class="close"><svg t="1" class="icon" viewBox="0 0 1024 1024" version="1.1"
-        xmlns="http://www.w3.org/2000/svg" p-id="4692" width="32" height="32">
-        <path
-          d="M512 0C229.187368 0 0 229.187368 0 512 0 794.812632 229.187368 1024 512 1024 794.812632 1024 1024 794.812632 1024 512 1024 229.187368 794.812632 0 512 0ZM512 970.105263C259.368421 970.105263 53.894737 764.631579 53.894737 512 53.894737 259.368421 259.368421 53.894737 512 53.894737 764.631579 53.894737 970.105263 259.368421 970.105263 512 970.105263 764.631579 764.631579 970.105263 512 970.105263ZM550.130526 512 719.629474 342.366316C730.273684 331.856842 730.273684 314.88 719.629474 304.370526 709.12 293.726316 692.143158 293.726316 681.633684 304.370526L512 473.869474 342.366316 304.370526C331.856842 293.726316 314.88 293.726316 304.370526 304.370526 293.726316 314.88 293.726316 331.856842 304.370526 342.366316L473.869474 512 304.370526 681.633684C293.726316 692.143158 293.726316 709.12 304.370526 719.629474 309.625263 724.884211 316.496842 727.578947 323.368421 727.578947 330.24 727.578947 337.111579 724.884211 342.366316 719.629474L512 550.130526 681.633684 719.629474C686.888421 724.884211 693.76 727.578947 700.631579 727.578947 707.503158 727.578947 714.374737 724.884211 719.629474 719.629474 730.273684 709.12 730.273684 692.143158 719.629474 681.633684L550.130526 512Z"
-          p-id="4693"></path>
-      </svg></span>
-    <div id="videoResume">
-      <video id="videoResumeC" controls="" name="media">
-        <source src="img/WhyDon'tWe.mp4" type="video/mp4">
-      </video>
+  <!-- 加载动画 -->
+  <div class="loader" id="loader">
+    <div class="loader__content">
+      <div class="loader__spinner"></div>
+      <div class="loader__text">LOADING...</div>
     </div>
   </div>
 
-  <!-- 主要页面 -->
-  <div class="box">
-
-    <!-- 顶部栏 -->
-    <div class="header borderafter">
-      <!-- 返回按钮 -->
-      <a style="position: absolute;left:50px;" href="javascript:history.back()">
-        <svg t="2" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg"
-          p-id="3737" width="20" height="20">
-          <path
-            d="M98 468.9l322.8-322.8v184.4C743.6 376.7 881.9 607.3 928 837.8 812.7 676.4 651.3 602.6 420.8 602.6v189.1L98 468.9z"
-            p-id="3738" fill="#254665"></path>
-        </svg>
+  <!-- 导航栏 -->
+  <nav class="nav" id="navbar">
+    <div class="nav__inner">
+      <a href="./index.html" class="nav__logo">
+        LIEM<span>.</span>
       </a>
 
+      <div class="nav__links" id="navLinks">
+        <a href="./index.html" class="nav__link active">首页</a>
+        <a href="./home.html" class="nav__link">作品</a>
+        <a href="./resume.html" class="nav__link">简历</a>
+        <a href="./blog.html" class="nav__link">关于</a>
+        <a href="./live.html" class="nav__link">更多</a>
+        <a href="./contact.html" class="nav__link">联系</a>
+      </div>
 
-      <div class="col">
-        <span><a href="./index.html">LIEM：Hi,Welcome To My Blog！</a></span>
-        <!-- 右边操作栏 -->
-
-        <div class="header-right">
-          <!-- 按钮 -->
-          <div class="min_menu-wrap" id="minmenu">
-            <span class="min_menu"></span>
+      <div class="nav__actions">
+        <button class="nav__toggle" id="navToggle" aria-label="菜单">
+          <div class="nav__toggle-icon">
+            <span></span>
+            <span></span>
+            <span></span>
           </div>
-          <!-- 列表 -->
-          <div class="menu_list">
-            <!-- 栏目 -->
-            <ul class="header-nav">
-              <li class="active"><a href="./index.html">首页</a></li>
-              <li><a href="./home.html">分享</a></li>
-              <li><a href="./resume.html">经验</a></li>
-              <li><a href="./blog.html">关于</a></li>
-              <li><a href="./live.html">其他</a></li>
-              <li><a href="./contact.html">联系</a></li>
-            </ul>
-            <!-- 开关灯 -->
-            <span class="kaig-bottm">
-              <svg t="3" class="icon" viewBox="0 0 1024 1024" version="1.1"
-                xmlns="http://www.w3.org/2000/svg" p-id="2250" width="15" height="15">
-                <path
-                  d="M1008.535135 710.670332l-70.446388 116.386904a112.099975 112.099975 0 0 1-140.572857 43.829042l-69.422645-17.083729c-5.502624 3.1992-11.133217 6.3984-16.763809 9.341665l-18.299425 62.896276C687.335435 981.514621 639.4754 1023.744064 582.657604 1023.744064H441.764828c-56.817796 0-104.677831-42.293427-110.308423-97.703574l-18.299425-62.896276a422.166458 422.166458 0 0 1-16.827793-9.341665l-69.614597 17.083729a112.163959 112.163959 0 0 1-140.508873-43.893026L15.631361 710.542364a107.493127 107.493127 0 0 1 32.43989-144.731817L96.251206 518.910272a410.649338 410.649338 0 0 1 0-14.204448l-48.179955-46.836291a107.365159 107.365159 0 0 1-32.375906-144.731817l70.190452-116.450888a112.099975 112.099975 0 0 1 140.572857-43.893026l69.550612 17.083729c5.566608-3.1992 11.133217-6.3984 16.827794-9.341665l18.299425-62.896276C336.831061 42.229443 384.691096 0 441.508892 0H582.529636c56.817796 0 104.677831 42.293427 110.372407 97.63959l18.235441 62.704324c5.75856 3.007248 11.325169 6.142464 16.827793 9.341665l69.678581-17.083729a112.163959 112.163959 0 0 1 140.508873 43.893026l70.446388 116.514872a107.493127 107.493127 0 0 1-32.375906 144.731817l-48.179955 46.772307a414.616346 414.616346 0 0 1 0 14.204448l48.243939 46.836291c47.092227 31.928018 62.192452 94.952262 32.247938 145.115721z m-213.066733-142.23644l3.391152-31.032242a246.210447 246.210447 0 0 0 0-51.699076l-3.263184-30.904274 93.992502-91.305173-53.554612-88.553862-131.615096 32.311922-23.546113-16.059985a294.134466 294.134466 0 0 0-48.627844-26.809297l-27.513121-11.901025L568.453156 127.968008H455.649356L419.370426 252.736816l-27.705074 11.965009c-16.635841 7.166208-32.951762 16.187953-48.499875 26.745313l-23.610097 15.996001-131.487128-32.247938-53.36266 88.489878 94.056486 91.433141-3.263184 30.968258a247.874031 247.874031 0 0 0 0 51.699076l3.1992 30.904274-93.928518 91.369157 53.554612 88.489878 131.551112-32.311922 23.610097 16.059985c15.292177 10.429393 31.544114 19.451137 48.563859 26.809297l27.577106 11.965009L455.905292 895.776056h112.611848l36.342914-124.768808 27.64109-11.965009c16.699825-7.166208 32.951762-16.187953 48.563859-26.745313l23.546113-15.996001 131.423144 32.247938 53.68258-88.745814-94.184454-91.369157zM512.147232 615.846038c57.329668 0 103.846038-46.516371 103.974006-103.974006 0-57.329668-46.644339-103.974006-103.974006-103.974007S408.173225 454.542364 408.173225 511.872032 454.817564 615.846038 512.147232 615.846038z m0 127.968008c-127.968008 0-231.942014-103.910022-231.942015-231.942014 0-127.968008 103.910022-231.942014 231.942015-231.942015 127.968008 0 231.942014 103.910022 231.942014 232.133967A232.133967 232.133967 0 0 1 512.147232 743.814046z"
-                  p-id="2251"></path>
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- 主内容 -->
+  <main class="page-wrapper">
+
+    <!-- Hero 区域 -->
+    <section class="hero">
+      <div class="hero__bg"></div>
+      <div class="container">
+        <div class="hero__content">
+          <div class="hero__greeting">
+            <span class="hero__greeting-dot"></span>
+            <span>开放合作 · 软件工程技术</span>
+          </div>
+
+          <h1 class="hero__title">
+            <span class="hero__title-line">你好，我是 <span class="text-gradient">LIEM</span></span>
+            <span class="hero__title-line">用代码构建美好体验</span>
+          </h1>
+
+          <p class="hero__description">
+            专注于前端开发、后端架构与系统维护。热爱探索新技术，追求极致的用户体验和代码质量。永远相信美好的事情即将发生。
+          </p>
+
+          <div class="hero__actions">
+            <a href="./home.html" class="btn btn-primary">
+              查看作品
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="5" y1="12" x2="19" y2="12"></line>
+                <polyline points="12 5 19 12 12 19"></polyline>
               </svg>
-              <!-- 开关按钮 -->
-              <span class="my-radio active" id="myRadio">
-                <i></i>
-              </span>
-              <svg t="4" class="icon" viewBox="0 0 1024 1024" version="1.1"
-                xmlns="http://www.w3.org/2000/svg" p-id="3376" width="15" height="15">
-                <path
-                  d="M505.4 878.6c-196.7 0-358-150.9-374.9-343.1 1-18.6 16.1-33.4 34.9-33.4 10.8 0 20.5 4.8 26.9 12.4 0.2 0.3 0.5 0.1 0.5-0.7 41.6 44.2 100.5 71.9 166.1 71.9 127.1 0 230.1-103 230.1-230.1 0-66.1-28-125.1-72.6-166.8 0.1-0.1 0.5-0.1 0.3-0.3-7-6.5-11.4-15.7-11.4-26.1 0-19 14.9-34.1 33.7-35.3 192.1 17.1 342.9 178.3 342.9 375 0 208-168.5 376.5-376.5 376.5z"
-                  p-id="3377"></path>
+            </a>
+            <a href="./contact.html" class="btn btn-secondary">
+              联系我
+            </a>
+          </div>
+
+          <div class="hero__social">
+            <span style="font-size: var(--text-sm); color: var(--text-tertiary);">关注我：</span>
+            <a href="https://github.com/liem0352" target="_blank" class="hero__social-link" title="GitHub">
+              <svg viewBox="0 0 24 24" fill="currentColor">
+                <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
               </svg>
-            </span>
+            </a>
+            <a href="Mailto:liem@example.com" class="hero__social-link" title="Email">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+                <polyline points="22,6 12,13 2,6"></polyline>
+              </svg>
+            </a>
           </div>
         </div>
       </div>
-    </div>
+    </section>
 
-    <!-- 顶部导航 -->
-    <div class="navigation">
-      <div class="nav-titleBox co zz">
-        <!-- 占位符 -->
-        <div class="co-left"></div>
+    <!-- 统计数据 -->
+    <section class="section" id="stats">
+      <div class="container">
+        <div class="stats-grid">
+          <div class="stat-card">
+            <div class="stat-card__number text-gradient">3+</div>
+            <div class="stat-card__label">个人项目</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-card__number text-gradient">2+</div>
+            <div class="stat-card__label">团队项目</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-card__number text-gradient">1+</div>
+            <div class="stat-card__label">获奖情况</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-card__number text-gradient">∞</div>
+            <div class="stat-card__label">学习热情</div>
+          </div>
+        </div>
+      </div>
+    </section>
 
-        <!-- 标题 -->
-        <div class="co-right ">
-          <span class="titleBox-tag">HI GUYS!</span>
-          <h1>
-            Hello<br>
-            I`m liem
-          </h1>
-          <a class="buttom navbtn" href="#next-one">了解一下
+    <!-- 技能专长 -->
+    <section class="section" id="skills">
+      <div class="container">
+        <div class="section__header">
+          <div class="section__eyebrow">技术栈</div>
+          <h2 class="section__title">我的能力</h2>
+          <p class="section__subtitle">
+            从前端界面到后端架构，从页面动效到系统维护，全栈开发能力助你实现想法
+          </p>
+        </div>
+
+        <div class="skills-grid">
+          <div class="skill-card card">
+            <div class="skill-card__icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="16 18 22 12 16 6"></polyline>
+                <polyline points="8 6 2 12 8 18"></polyline>
+              </svg>
+            </div>
+            <h3 class="skill-card__title">前端开发</h3>
+            <p class="skill-card__desc">
+              HTML5、CSS3、JavaScript 原生开发，熟悉响应式布局、CSS 动画与交互效果实现
+            </p>
+            <div class="skill-card__tags">
+              <span class="badge">HTML5</span>
+              <span class="badge">CSS3</span>
+              <span class="badge">JavaScript</span>
+            </div>
+          </div>
+
+          <div class="skill-card card">
+            <div class="skill-card__icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                <ellipse cx="12" cy="5" rx="9" ry="3"></ellipse>
+                <path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"></path>
+                <path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"></path>
+              </svg>
+            </div>
+            <h3 class="skill-card__title">后端开发</h3>
+            <p class="skill-card__desc">
+              Java、C 语言后端开发，MySQL 数据库设计与优化，RESTful API 接口开发
+            </p>
+            <div class="skill-card__tags">
+              <span class="badge">Java</span>
+              <span class="badge">C语言</span>
+              <span class="badge">MySQL</span>
+            </div>
+          </div>
+
+          <div class="skill-card card">
+            <div class="skill-card__icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect>
+                <line x1="8" y1="21" x2="16" y2="21"></line>
+                <line x1="12" y1="17" x2="12" y2="21"></line>
+              </svg>
+            </div>
+            <h3 class="skill-card__title">系统维护</h3>
+            <p class="skill-card__desc">
+              硬件软件网络故障排查，系统配置网络配置，电脑故障诊断与恢复
+            </p>
+            <div class="skill-card__tags">
+              <span class="badge">Windows</span>
+              <span class="badge">网络</span>
+              <span class="badge">硬件</span>
+            </div>
+          </div>
+
+          <div class="skill-card card">
+            <div class="skill-card__icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M12 19l7-7 3 3-7 7-3-3z"></path>
+                <path d="M18 13l-1.5-7.5L2 2l3.5 14.5L13 18l5-5z"></path>
+                <path d="M2 2l7.586 7.586"></path>
+                <circle cx="11" cy="11" r="2"></circle>
+              </svg>
+            </div>
+            <h3 class="skill-card__title">网页制作</h3>
+            <p class="skill-card__desc">
+              JS 交互动效开发，AJAX 数据渲染，SCSS 样式预处理，jQuery 插件使用
+            </p>
+            <div class="skill-card__tags">
+              <span class="badge">jQuery</span>
+              <span class="badge">AJAX</span>
+              <span class="badge">SCSS</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 精选作品 -->
+    <section class="section" id="works">
+      <div class="container">
+        <div class="section__header">
+          <div class="section__eyebrow">作品集</div>
+          <h2 class="section__title">精选项目</h2>
+          <p class="section__subtitle">
+            以下是我完成的部分项目，涵盖网站开发、系统设计和创意实验
+          </p>
+        </div>
+
+        <div class="works-grid">
+          <a href="./home.html" class="work-card card">
+            <div class="work-card__image">
+              <img src="./img/project/wangzhan.png" alt="个人简历网站">
+              <div class="work-card__overlay">
+                <span class="work-card__view">查看详情 →</span>
+              </div>
+            </div>
+            <div class="work-card__content">
+              <div class="work-card__tags">
+                <span class="badge">Bootstrap</span>
+                <span class="badge">个人简历</span>
+              </div>
+              <h3 class="work-card__title">个人简历网站</h3>
+              <p class="work-card__desc">使用 Bootstrap 框架搭建的响应式个人简历展示网站</p>
+            </div>
+          </a>
+
+          <a href="Demo1.html" class="work-card card">
+            <div class="work-card__image">
+              <img src="./img/project/daohanglan.png" alt="导航栏特效">
+              <div class="work-card__overlay">
+                <span class="work-card__view">查看详情 →</span>
+              </div>
+            </div>
+            <div class="work-card__content">
+              <div class="work-card__tags">
+                <span class="badge">Paper.js</span>
+                <span class="badge">Canvas</span>
+              </div>
+              <h3 class="work-card__title">Paper.js 导航特效</h3>
+              <p class="work-card__desc">基于 Paper.js 的 Canvas 粒子动画导航栏特效演示</p>
+            </div>
+          </a>
+
+          <a href="./home.html" class="work-card card">
+            <div class="work-card__image">
+              <img src="./img/project/guanli.png" alt="管理系统">
+              <div class="work-card__overlay">
+                <span class="work-card__view">查看详情 →</span>
+              </div>
+            </div>
+            <div class="work-card__content">
+              <div class="work-card__tags">
+                <span class="badge">Java</span>
+                <span class="badge">管理系统</span>
+              </div>
+              <h3 class="work-card__title">图书管理系统</h3>
+              <p class="work-card__desc">Java + MySQL 开发的图书馆图书信息管理系统</p>
+            </div>
+          </a>
+        </div>
+
+        <div style="text-align: center; margin-top: var(--space-12);">
+          <a href="./home.html" class="btn btn-secondary">
+            查看全部作品
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="5" y1="12" x2="19" y2="12"></line>
+              <polyline points="12 5 19 12 12 19"></polyline>
+            </svg>
           </a>
         </div>
       </div>
-    </div>
+    </section>
 
-    <!-- 个人资料 -->
-    <div class="content zz">
-      <!-- 占位符 -->
-      <div class="co-left">
-        <!-- 个人吸盘 -->
-        <div class="me-card carbox borderbefore" id="mycard">
-          <div class="mecar-title">
-            <div class="me-image">
-              <span class="status">
-                <i>软件工程技术</i>
-              </span>
-              <img src="./img/touxiang.jpg" alt="">
+    <!-- 关于我 -->
+    <section class="section" id="about">
+      <div class="container">
+        <div class="about-grid">
+          <div class="about__content">
+            <div class="section__eyebrow">关于我</div>
+            <h2 class="section__title">热爱技术，追求卓越</h2>
+            <p class="section__subtitle">
+              作为软件工程专业的学生，我对编程充满热情，喜欢将创意转化为实际的产品和体验。
+            </p>
+            <div class="about__list">
+              <div class="about__item">
+                <div class="about__item-icon">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="20 6 9 17 4 12"></polyline>
+                  </svg>
+                </div>
+                <div>
+                  <h4>注重细节</h4>
+                  <p>每一行代码、每一个像素都追求完美</p>
+                </div>
+              </div>
+              <div class="about__item">
+                <div class="about__item-icon">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="20 6 9 17 4 12"></polyline>
+                  </svg>
+                </div>
+                <div>
+                  <h4>持续学习</h4>
+                  <p>技术日新月异，保持学习的热情和动力</p>
+                </div>
+              </div>
+              <div class="about__item">
+                <div class="about__item-icon">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="20 6 9 17 4 12"></polyline>
+                  </svg>
+                </div>
+                <div>
+                  <h4>团队协作</h4>
+                  <p>善于沟通，乐于分享，共同成长</p>
+                </div>
+              </div>
             </div>
-            <h3>LIEM x Bang</h3>
-            <p class="me-hover">
-              <span>永远相信美好的事情即将发生</span>
+          </div>
+          <div class="about__quote card glass">
+            <svg class="about__quote-icon" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M3 17c3.3 0 6-2.7 6-6V8c0-1.7-1.3-3-3-3S3 6.3 3 8v3h2V8c0-.6.4-1 1-1s1 .4 1 1v3c0 2.2-1.8 4-4 4v2zm10 0c3.3 0 6-2.7 6-6V8c0-1.7-1.3-3-3-3s-3 1.3-3 3v3h2V8c0-.6.4-1 1-1s1 .4 1 1v3c0 2.2-1.8 4-4 4v2z"/>
+            </svg>
+            <blockquote>
+              私が絶えず前進し、<br>宝石のように輝きを放つように。
+            </blockquote>
+            <cite>— 座右铭</cite>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA 区域 -->
+    <section class="section" id="cta">
+      <div class="container">
+        <div class="cta-card glass">
+          <div class="cta__content">
+            <h2 class="cta__title">有项目想法？让我们一起实现</h2>
+            <p class="cta__desc">
+              无论是网站开发、系统设计还是技术咨询，都欢迎与我联系
             </p>
           </div>
-          <div class="borderbotm"></div>
-          <div class="lianxi-list">
-            <a title="wx:t1y1b24">
-              <svg t="1234" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg"
-                p-id="14861" width="15" height="15">
-                <path
-                  d="M506.942 345.921c25.259 0 42.134-16.916 42.134-42.107 0-25.477-16.848-41.956-42.134-41.956-25.299 0-50.668 16.48-50.668 41.956 0.028 25.204 25.409 42.107 50.668 42.107l0 0zM506.942 345.921zM271.257 261.857c-25.259 0-50.79 16.48-50.79 41.956 0 25.19 25.532 42.107 50.79 42.107 25.163 0 42.012-16.916 42.012-42.107-0.014-25.477-16.834-41.956-42.012-41.956l0 0zM271.257 261.857zM1010.654 615.492c0-133.202-123.563-246.702-275.237-258.512 0.205-1.652 0.301-3.373-0.068-5.092-30.406-141.79-182.886-248.695-354.7-248.695-194.15 0-352.119 135.387-352.119 301.793 0 89.279 45.574 169.725 131.946 233.158l-30.106 90.508c-1.939 5.885-0.177 12.37 4.506 16.452 2.853 2.458 6.445 3.741 10.076 3.741 2.335 0 4.697-0.546 6.867-1.625l113.036-56.565 13.926 2.827c34.802 7.154 64.853 13.353 101.868 13.353 10.895 0 40.878-3.987 43.404-7.182 40.755 101.99 153.094 175.61 285.273 175.61 33.86 0 68.13-8.164 98.891-15.866l87.136 47.636c2.307 1.257 4.847 1.911 7.359 1.911 3.441 0 6.881-1.161 9.639-3.413 4.847-3.932 6.841-10.404 5.038-16.33l-22.255-74.001c74.602-58.955 115.521-129.488 115.521-199.708l0 0zM409.798 665.75c-9.626 0.833-19.388 1.243-29.082 1.243-32.686 0-60.334-5.652-92.31-12.26l-18.582-3.755c-3.195-0.683-6.567-0.245-9.503 1.269l-81.687 40.892 21.231-63.775c2.076-6.24-0.205-13.053-5.57-16.821-82.07-57.207-123.659-126.894-123.659-207.093 0-144.179 139.087-261.516 310.067-261.516 151.142 0 284.959 91.955 312.579 214.261-158.475 2.076-286.706 113.487-286.706 250.32 0 19.893 3.018 39.171 8.11 57.767-1.542-0.382-3.168-0.683-4.887-0.532l0 0zM860.371 788.699c-4.875 3.673-6.935 10.007-5.188 15.852l13.804 45.903-56.647-30.993c-2.157-1.188-4.588-1.803-7.004-1.803-1.188 0-2.389 0.15-3.564 0.464-30.379 7.674-61.822 15.593-92.433 15.593-142.186 0-257.857-97.717-257.857-217.811 0-120.095 115.658-217.771 257.857-217.771 139.469 0 257.325 99.724 257.325 217.771 0 59.87-37.738 121.255-106.291 172.797l0 0zM868.181 797.178zM616.454 506.006c-16.848 0-33.696 16.971-33.696 33.792 0 16.944 16.848 33.669 33.696 33.669 25.313 0 42.038-16.725 42.038-33.669 0-16.848-16.725-33.792-42.038-33.792l0 0zM616.454 506.006zM801.58 506.006c-16.603 0-33.451 16.971-33.451 33.792 0 16.944 16.848 33.669 33.451 33.669 25.231 0 42.257-16.725 42.257-33.669 0-16.848-16.998-33.792-42.257-33.792l0 0zM801.58 506.006z"
-                  p-id="14862"></path>
+          <div class="cta__actions">
+            <a href="./contact.html" class="btn btn-primary">
+              开始合作
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="5" y1="12" x2="19" y2="12"></line>
+                <polyline points="12 5 19 12 12 19"></polyline>
               </svg>
             </a>
-            <a title="QQ: liem">
-              <svg t="123456" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg"
-                p-id="18277" width="15" height="15">
-                <path
-                  d="M537.576602 0c345.434577 0 362.285044 329.787714 362.285044 329.787714 52.356809 69.207276 24.072096 131.794725 24.072096 131.794725 168.504671 264.793055 59.578437 341.22196 29.488318 346.638181-29.488318 5.416222-58.374833-32.49733-58.374833-32.49733s-9.628838 37.913551-33.700934 58.374833c87.86315 40.922563 72.216288 92.075767 72.216288 92.075767s-18.655874 154.061414-383.94993 56.569425l-31.293725-5.416222c-350.248996 126.378504-393.578768-43.931575-393.578768-43.931575s-14.443258-71.012683 53.560413-97.491989c-39.718958-24.072096-53.560413-75.2253-53.560413-75.2253s-35.506341 57.77303-81.845126 36.709946C-3.443754 775.723291-31.728467 587.359141 143.997834 451.351799c0 0-25.275701-80.641521 32.49733-128.785713C176.495163 322.566085 192.142025 0 537.576602 0L537.576602 0 537.576602 0zM230.055576 341.22196C153.626672 406.216619 204.779876 471.211278 204.779876 471.211278 36.275204 574.72129 66.365324 742.022357 66.365324 742.022357s27.081108-13.239653 45.736982-52.356809c19.257677-39.117156 48.745994 6.619826 48.745994 6.619826s18.655874 89.066755 74.623497 123.971294c56.569425 34.904539-2.40721 57.171228-2.40721 57.171228s-61.985647 0.601802-56.569425 43.329773c5.416222 42.126168 205.81642 95.084779 325.575097 1.203605l63.791054 8.425234c209.427235 72.81809 312.937247 4.814419 319.557073-8.425234 6.619826-13.239653-31.895527-38.515353-67.401869-53.560413-35.506341-15.04506-44.533377-30.691922-13.239653-51.153204 31.293725-21.063084 43.931575-62.587449 61.985647-105.31542 18.054072-42.72797 45.736982-21.664886 49.347797-9.628838 3.610814 12.036048 29.488318 52.356809 29.488318 52.356809s68.003671-72.216288-73.419893-285.856139c0 0 30.691922-63.791054-21.063084-116.147863 0 0-12.63785-300.299397-320.158876-300.299397C224.639355 52.356809 230.055576 341.22196 230.055576 341.22196L230.055576 341.22196 230.055576 341.22196z"
-                  p-id="18278"></path>
-              </svg>
-            </a>
-            <a title="email:liem@example.com" href="Mailto:liem@example.com?Subject=邮箱标题&amp;Body=邮箱内容！">
-              <svg t="12345" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg"
-                p-id="17271" width="15" height="15">
-                <path
-                  d="M983.899806 785.385782V224.886223h0.180631l-0.180631-4.696419c-0.180632-5.238314-0.722526-10.476627-1.806315-15.714941-2.890104-25.469042-21.675781-44.977245-45.519139-47.686717H122.287529c-11.741048 0-23.482096 1.625684-34.861881 5.238314-30.346093 10.295996-50.757453 40.100194-50.576821 74.058917v534.849885c-0.361263 21.314518 5.780208 42.087141 17.701887 59.789028l0.361263 0.722526 5.418946 3.973893c18.243782 21.856412 44.977245 34.319986 73.517022 34.500618H904.421944c37.751984 0 70.265655-27.094726 79.477862-66.291763l0.180631-0.541894c0.361263-5.96084 0.361263-11.741048-0.180631-17.701888zM390.16405 547.494091l55.453872 49.854295 43.893456 40.100194c5.418945 5.96084 13.005468 9.57347 21.133886 9.57347 7.947786 0 15.534309-3.431999 21.133886-9.57347l101.153642-91.941436 272.753572 263.721997H126.622685L390.16405 547.494091z m120.119951 30.346092L111.449638 216.03528H115.604163c214.409596-0.903158 703.559711-2.890104 793.875463-0.361263l-399.195625 362.166166z m165.458458-69.72376l251.619686-227.956959v474.518963L675.742459 508.116423z m-328.568707 0.180631L93.205856 760.278003V278.895043l253.967896 229.402011z"
-                  p-id="17272"></path>
-              </svg>
-            </a>
-          </div>
-          <div class="borderbotm"></div>
-          <div class="mecar-bottm">
-            <div>
-              <span class="mecarbottm-key">院校</span>
-              <span class="mecarbottm-value">University</span>
-            </div>
-            <div>
-              <span class="mecarbottm-key">所在城市</span>
-              <span class="mecarbottm-value">City, Province</span>
-            </div>
-            <div>
-              <span class="mecarbottm-key">班级</span>
-              <span class="mecarbottm-value">Software Engineering Class</span>
-            </div>
-
-          </div>
-          <div class="borderbotm"></div>
-          <div class="buttom-box ">
-            <a class="button" href="Mailto:liem@example.com?Subject=邮箱标题&amp;Body=邮箱内容！">联系我</a>
           </div>
         </div>
       </div>
-      <!-- 右边 -->
-      <div class="co-right" id="next-one">
-        <!-- 完成项目 -->
-        <div class="content-li li1">
-          <div class="li1-box borderbefore">
-            <span>3</span><span class="tag">+</span>
-            <div class="borderbotm"></div>
-            <p>完成的个人项目</p>
-          </div>
-          <div class="li1-box borderbefore">
-            <span>2</span><span class="tag">+</span>
-            <div class="borderbotm"></div>
-            <p>参与的团队项目</p>
-          </div>
-          <div class="li1-box borderbefore">
-            <span>1</span><span class="tag">+</span>
-            <div class="borderbotm"></div>
-            <p>获奖情况</p>
-          </div>
-        </div>
-        <!-- 我的故事 -->
-        <div class="content-li li2">
-          <h3>
-            <span>我的故事</span>
-            <div class="borderbotm"></div>
-            <span>01</span>
-          </h3>
-          <div class="carbox li2-box">
-            <blockquote>
-              私が絶えず前進し、<br/>宝石のように輝きを放つように。
-            </blockquote>
-          </div>
-        </div>
-        <!-- 视频 -->
-        <div class="content-li li3">
-          <h3>
-            <span>视频</span>
-            <div class="borderbotm"></div>
-            <span>02</span>
-          </h3>
-          <div class="carbox li3-box">
-            <div class="play-buttom" id="playbuttom">
-              <span><svg t="1649146869552" class="icon" viewBox="0 0 1024 1024" version="1.1"
-                  xmlns="http://www.w3.org/2000/svg" p-id="20204" width="50" height="50">
-                  <path d="M657.92 535.04l-256-160v320z" p-id="20205" data-spm-anchor-id="a313x.7781069.0.i27"
-                    class="selected" fill="#ffffff"></path>
-                </svg></span>
-            </div>
-          </div>
-        </div>
-        <!-- 我的能力 -->
-        <div class="content-li li4">
-          <h3>
-            <span>我的能力</span>
-            <div class="borderbotm"></div>
-            <span>03</span>
-          </h3>
-          <div class="li4-box">
-            <div class="carbox">
-              <svg t="123456789" class="icon" viewBox="0 0 1024 1024" version="1.1"
-                xmlns="http://www.w3.org/2000/svg" p-id="1638" width="40" height="40">
-                <path
-                  d="M488.96 506.88h40.96v307.2h-40.96zM803.84 737.28h-97.28c-45.056 0-81.92-36.864-81.92-81.92V502.272h40.96V655.36c0 22.528 18.432 40.96 40.96 40.96h97.28v40.96zM312.32 737.28H215.04v-40.96h97.28c22.528 0 40.96-18.432 40.96-40.96V502.272h40.96V655.36c0 45.056-36.864 81.92-81.92 81.92z"
-                  fill="#254665" p-id="1639"></path>
-                <path
-                  d="M509.44 942.08c-46.592 0-84.48-37.888-84.48-84.48S462.848 773.12 509.44 773.12s84.48 37.888 84.48 84.48-37.888 84.48-84.48 84.48z m0-128c-24.064 0-43.52 19.456-43.52 43.52s19.456 43.52 43.52 43.52 43.52-19.456 43.52-43.52-19.456-43.52-43.52-43.52zM171.52 798.72c-46.592 0-84.48-37.888-84.48-84.48S124.928 629.76 171.52 629.76 256 667.648 256 714.24 218.112 798.72 171.52 798.72z m0-128c-24.064 0-43.52 19.456-43.52 43.52s19.456 43.52 43.52 43.52 43.52-19.456 43.52-43.52-19.456-43.52-43.52-43.52zM847.36 798.72c-46.592 0-84.48-37.888-84.48-84.48s37.888-84.48 84.48-84.48 84.48 37.888 84.48 84.48-37.888 84.48-84.48 84.48z m0-128c-24.064 0-43.52 19.456-43.52 43.52s19.456 43.52 43.52 43.52 43.52-19.456 43.52-43.52-19.456-43.52-43.52-43.52z"
-                  fill="#254665" p-id="1640"></path>
-                <path
-                  d="M683.52 543.232H319.488c-90.112 0-163.328-73.216-163.328-163.328 0-90.112 73.216-163.328 163.328-163.328h7.68C344.064 138.752 413.696 81.92 495.616 81.92c69.632 0 132.608 42.496 159.232 105.472 9.728-1.536 19.456-2.56 29.184-2.56 98.816 0 179.2 80.384 179.2 179.2-0.512 98.816-80.896 179.2-179.712 179.2zM319.488 258.048c-67.584 0-122.368 54.784-122.368 122.368s54.784 122.368 122.368 122.368h364.544c76.288 0 138.24-61.952 138.24-138.24s-61.952-138.24-138.24-138.24c-12.288 0-24.576 1.536-36.864 5.12l-19.456 5.12-5.632-18.944C605.696 161.792 553.472 122.88 495.616 122.88c-68.096 0-124.416 51.2-131.584 118.784l-2.048 22.016-21.504-3.584c-7.168-1.536-14.336-2.048-20.992-2.048z"
-                  fill="#254665" p-id="1641"></path>
-                <path
-                  d="M655.36 640H307.2V424.96c0-33.792 27.648-61.44 61.44-61.44h348.16v215.04c0 33.792-27.648 61.44-61.44 61.44z"
-                  fill="#254665" opacity=".18" p-id="1642"></path>
-              </svg>
-              <h4>系统维护</h4>
-              <p>
-                硬件、软件、网络故障排除；软件安装、更新<br>
-                系统配置、网络配置、电脑故障诊断<br>
-                分析、解决、维护、恢复、排查<br>
-              </p>
-              <a>VIEW DETAILS</a>
-            </div>
-            <div class="carbox">
-              <svg t="1649230368898" class="icon" viewBox="0 0 1024 1024" version="1.1"
-                xmlns="http://www.w3.org/2000/svg" p-id="1847" width="40" height="40">
-                <path
-                  d="M153.6 460.8h-40.96V179.2c0-45.056 34.816-81.92 78.336-81.92H921.6v230.4h-40.96V138.24H190.976c-20.48 0-37.376 18.432-37.376 40.96v281.6zM843.776 783.36H112.64v-216.064h40.96V742.4h690.176c20.48 0 37.376-18.432 37.376-40.96v-141.824h40.96V701.44c-0.512 45.056-35.328 81.92-78.336 81.92zM220.16 885.76h593.92v40.96H220.16z"
-                  fill="#333333" p-id="1848"></path>
-                <path
-                  d="M418.304 388.096l17.408 83.968 27.648-83.968H481.28l24.576 82.432 16.384-82.432h36.864l-27.648 130.048h-39.424L470.528 455.68 450.56 518.144h-39.424l-29.696-130.048h36.864zM611.328 388.096l17.408 83.968 27.648-83.968h17.92l24.576 82.432 16.384-82.432h36.864l-27.648 130.048h-39.424L663.552 455.68l-19.968 62.464H604.16l-29.696-130.048h36.864zM804.352 388.096l17.408 83.968 27.648-83.968h17.92l24.576 82.432 16.384-82.432h36.864l-27.648 130.048h-39.424L856.576 455.68l-19.968 62.464h-39.424l-29.696-130.048h36.864z"
-                  fill="#EB4446" p-id="1849"></path>
-                <path
-                  d="M839.168 445.44h-512V179.2c0-33.792 27.648-61.44 61.44-61.44h512v266.24c0 33.792-27.648 61.44-61.44 61.44z"
-                  fill="#333333" opacity=".18" p-id="1850"></path>
-                <path d="M496.64 762.88h40.96v143.36h-40.96z" fill="#333333" p-id="1851"></path>
-              </svg>
-              <h4>网页制作</h4>
-              <p>
-                HTML、JS、css、scss<br>
-                JS交互<br>
-                AJAX数据渲染<br>
-              </p>
-              <a>VIEW DETAILS</a>
-            </div>
-            <div class="carbox">
-              <svg t="1649230380175" class="icon" viewBox="0 0 1024 1024" version="1.1"
-                xmlns="http://www.w3.org/2000/svg" p-id="2002" width="40" height="40">
-                <path
-                  d="M738.304 689.664h-59.392v-40.96h59.392c89.6 0 162.816-74.24 162.816-164.864 0-91.136-73.216-164.864-162.816-164.864-9.216 0-18.944 1.024-28.16 2.56l-21.504 3.584-2.048-22.016C677.376 211.968 602.112 143.36 512 143.36c-90.624 0-165.888 68.608-175.104 159.744l-2.048 22.016-21.504-3.584c-9.216-1.536-18.432-2.56-28.16-2.56-89.6 0-162.816 74.24-162.816 164.864 0 91.136 73.216 164.864 162.816 164.864h59.904v40.96H285.184c-112.128 0-203.776-92.672-203.776-205.824s91.136-205.824 203.776-205.824c4.608 0 9.728 0 14.336 0.512C319.488 176.64 407.04 102.4 511.488 102.4c104.96 0 192.512 74.24 212.48 175.616 4.608-0.512 9.216-0.512 14.336-0.512 112.128 0 203.776 92.672 203.776 205.824s-91.136 206.336-203.776 206.336z"
-                  fill="#333333" p-id="2003"></path>
-                <path d="M574.464 679.936L512 617.984l-62.464 61.952-28.672-28.672 91.136-91.648 91.136 91.648z"
-                  fill="#EB4446" p-id="2004"></path>
-                <path d="M491.52 614.4h40.96v171.52h-40.96z" fill="#EB4446" p-id="2005"></path>
-                <path
-                  d="M512 928.768c-3.584 0-7.68-1.024-10.752-3.072l-187.392-119.296c-6.144-3.584-9.728-10.24-9.728-17.408v-239.104c0-7.168 3.584-13.312 9.728-17.408l187.392-119.296c6.656-4.096 15.36-4.096 22.016 0l187.392 119.296c6.144 3.584 9.728 10.24 9.728 17.408V788.48c0 7.168-3.584 13.312-9.728 17.408l-187.392 119.296c-3.584 2.56-7.68 3.584-11.264 3.584z m-166.912-151.552l166.912 106.496 166.912-106.496v-216.576L512 454.656l-166.912 106.496v216.064z m354.304 11.264z"
-                  fill="#333333" p-id="2006"></path>
-                <path
-                  d="M675.84 675.84H286.72V409.6c0-33.792 27.648-61.44 61.44-61.44h389.12v266.24c0 33.792-27.648 61.44-61.44 61.44z"
-                  fill="#333333" opacity=".18" p-id="2007"></path>
-              </svg>
-              <h4>前端</h4>
-              <p>
-                html5<br>
-                css<br>
-                js
-              </p>
-              <a>VIEW DETAILS</a>
-            </div>
-            <div class="carbox">
-              <svg t="1649230391217" class="icon" viewBox="0 0 1024 1024" version="1.1"
-                xmlns="http://www.w3.org/2000/svg" p-id="2160" width="40" height="40">
-                <path
-                  d="M512 942.08c-99.328 0-174.08-184.832-174.08-430.08s74.752-430.08 174.08-430.08 174.08 184.832 174.08 430.08-74.752 430.08-174.08 430.08z m0-819.2c-62.976 0-133.12 159.744-133.12 389.12s70.144 389.12 133.12 389.12 133.12-159.744 133.12-389.12-70.144-389.12-133.12-389.12z"
-                  fill="#333333" p-id="2161"></path>
-                <path d="M102.4 491.52h814.592v40.96H102.4z" fill="#EB4446" p-id="2162"></path>
-                <path
-                  d="M512 942.08c-85.504 0-167.936-25.088-239.104-72.192l22.528-33.792C359.936 878.592 434.688 901.12 512 901.12c214.528 0 389.12-174.592 389.12-389.12s-174.592-389.12-389.12-389.12-389.12 174.592-389.12 389.12c0 82.944 25.6 161.792 74.24 228.864l-33.28 24.064C110.08 691.2 81.92 603.648 81.92 512c0-237.056 193.024-430.08 430.08-430.08s430.08 193.024 430.08 430.08-193.024 430.08-430.08 430.08z"
-                  fill="#333333" p-id="2163"></path>
-                <path
-                  d="M860.16 793.6H419.84V496.64c0-33.792 27.648-61.44 61.44-61.44h440.32v296.96c0 33.792-27.648 61.44-61.44 61.44z"
-                  fill="#333333" opacity=".18" p-id="2164"></path>
-              </svg>
-              <h4>后端</h4>
-              <p>
-                MySql<br>
-                C语言<br>
-                Java<br>
-              </p>
-              <a>VIEW DETAILS</a>
-            </div>
-          </div>
-        </div>
+    </section>
 
-        <!-- 我的兼职 -->
-        <div class="content-li li7">
-          <h3>
-            <span>兼职</span>
-            <div class="borderbotm"></div>
-            <span>04</span>
-          </h3>
-          <div class="li7-box">
-            <div class="carbox li7boxitem">
+    <!-- 页脚 -->
+    <footer class="footer">
+      <div class="container">
+        <div class="footer__inner">
+          <div class="footer__top">
+            <div class="footer__brand">
+              <div class="footer__logo">
+                LIEM<span class="text-accent">.</span>
+              </div>
+              <p class="footer__tagline">
+                永远相信美好的事情即将发生。用代码构建美好体验，用设计传递价值。
+              </p>
+            </div>
+            <div class="footer__links">
               <div>
-                <h3>校园网络服务中心</h3>
-                <div class="item-price">
-                  <sub>￥</sub>
-                  495
-                  <sub>月</sub>
+                <h4 class="footer__column-title">导航</h4>
+                <div class="footer__column-links">
+                  <a href="./index.html" class="footer__column-link">首页</a>
+                  <a href="./home.html" class="footer__column-link">作品</a>
+                  <a href="./resume.html" class="footer__column-link">简历</a>
+                  <a href="./blog.html" class="footer__column-link">关于</a>
                 </div>
               </div>
-              <div class="borderbotm"></div>
-              <p>校巴站、云间校园</p>
-              <p>宿舍网络维护</p>
-              <p>其他维护</p>
-              <p class="throughline">校园卡</p>
-              <button class="buttonsty">聘用</button>
-            </div>
-            <div class="carbox li7boxitem active">
               <div>
-                <h3>其他</h3>
-                <div class="item-price">
-                  <sub>￥</sub>
-                  15
-                  <sub>h</sub>
+                <h4 class="footer__column-title">更多</h4>
+                <div class="footer__column-links">
+                  <a href="./live.html" class="footer__column-link">更多作品</a>
+                  <a href="./contact.html" class="footer__column-link">联系我</a>
+                  <a href="Demo1.html" class="footer__column-link">特效演示</a>
+                  <a href="https://github.com/liem0352" target="_blank" class="footer__column-link">GitHub</a>
                 </div>
               </div>
-              <div class="borderbotm"></div>
-              <p>js+java+mysql</p>
-              <p>web网站维护</p>
-              <p>博客，代码搬运</p>
-              <p class="throughline">毕业论文.</p>
-              <button class="buttonsty">聘用</button>
             </div>
           </div>
-        </div>
-
-        <!-- 我的专业教室 -->
-        <div class="content-li li5">
-          <h3>
-            <span>我的专业教师</span>
-            <div class="borderbotm"></div>
-            <span>05</span>
-          </h3>
-          <div class="li5-box">
-            <div class="left buttonsty" id="leftimg">
-              <span>
-                <svg t="1649148549783" class="icon" viewBox="0 0 1024 1024" version="1.1"
-                  xmlns="http://www.w3.org/2000/svg" p-id="22757" width="25" height="25">
-                  <path
-                    d="M325.399273 235.124364L600.157091 488.727273 325.399273 742.353455a34.909091 34.909091 0 1 0 47.36 51.316363l302.545454-279.272727a34.909091 34.909091 0 0 0 0-51.316364l-302.545454-279.272727a34.909091 34.909091 0 1 0-47.36 51.316364"
-                    fill="#ffffff" p-id="22758" data-spm-anchor-id="a313x.7781069.0.i41" class="selected"></path>
-                </svg>
-              </span>
-            </div>
-            <div class="right buttonsty" id="rightimg">
-              <span>
-                <svg t="1649148517782" class="icon" viewBox="0 0 1024 1024" version="1.1"
-                  xmlns="http://www.w3.org/2000/svg" p-id="21306" width="25" height="25">
-                  <path
-                    d="M675.328 765.626182L400.570182 512l274.757818-253.626182a34.909091 34.909091 0 1 0-47.36-51.316363l-302.545455 279.272727a34.909091 34.909091 0 0 0 0 51.316363l302.545455 279.272728a34.909091 34.909091 0 1 0 47.36-51.316364"
-                    fill="#ffffff" p-id="21307" data-spm-anchor-id="a313x.7781069.0.i34" class="selected"></path>
-                </svg>
-
-
-              </span>
-            </div>
-
-            <div class="li5box-ul" id="li5boxul">
-              <div class="li5box-car carbox">
-                <img src="./img/touxiang.jpg" alt="">
-                <h3>张老师</h3>
-                <span>Javascript+Jquery交互式前端开发</span>
-                <p>
-                  我业精于勤而荒于嬉，行成于思而毁于随。
-                </p>
-              </div>
-              <div class="li5box-car carbox">
-                <img src="./img/touxiang.jpg" alt="">
-                <h3>值老师</h3>
-                <span>Html5+css3 web前端开发</span>
-                <p>
-                  青，取之于蓝而青于蓝;
-                  冰，水为之而寒于水。
-                </p>
-              </div>
-              <div class="li5box-car carbox">
-                <img src="./img/touxiang.jpg" alt="">
-                <h3>张老师</h3>
-                <span>数据库</span>
-                <p>
-                  有志者事竟成。
-                </p>
-              </div>
-            </div>
+          <div class="footer__bottom">
+            <p class="footer__copyright">
+              © 2023 - 2025 LIEM. All rights reserved.
+            </p>
+            <p class="footer__copyright">
+              岂能尽如人意，但求无愧我心
+            </p>
           </div>
-
-        </div>
-        <!-- 最近完成 -->
-        <div class="content-li li6">
-          <h3>
-            <span>完成的案例
-            </span>
-            <div class="borderbotm"></div>
-            <span>06</span>
-          </h3>
-          <div class="li6-box">
-            <div class="carbox">
-              <a class="imgbox" href="Demo1.html">
-                <img src=" ./img/project/daohanglan.png" alt="">
-              </a>
-              <div class="li6car-title">
-                导航栏:基本实现:ul/li/a:hover
-                <br><br>2023.11.15
-                <div class="borderbotm"></div>
-                <a href="Demo1.html">进入浏览</a>
-              </div>
-            </div>
-          </div>
-        </div>    
-        <div class="borderbotm"></div>
-        
-        <!-- 底部 -->
-        <div class="carbox copybottm">
-          Hi,welcome to my blog 
-          <br/>
-          岂能尽如人意，但求无愧我心
-          <br/>
-          ©2023 - 2025 By Liem 
         </div>
       </div>
-      <div class="left">
-      </div>
+    </footer>
+
+  </main>
+
+  <!-- 脚本 -->
+  <script src="./js/jquery.min.js"></script>
+  <script src="./js/paper-full.min.js"></script>
+  <script src="./js/canvas.js"></script>
+  <script src="./js/base.js"></script>
+  <script src="./js/index.js"></script>
+
 </body>
-<script src="./js/base.js"></script>
-<script type="text/javascript" src="./js/paper-full.min.js"></script>
-<script type="text/javascript" src="./js/canvas.js"></script>
-<script src="./js/index.js"></script>
+
 </html>
