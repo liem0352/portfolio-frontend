@@ -6,6 +6,23 @@
 
 个人作品集前端网站，使用纯 HTML + CSS + JavaScript 构建，包含多个页面模块，展示个人项目、博客文章、简历信息和联系方式。网站集成了丰富的视觉特效与交互功能，是一个综合性的前端展示项目。
 
+## 致敬与来源声明
+
+本项目基于 [@wttAndroid/web-resume-resume](https://github.com/wttAndroid/web-resume-resume)（木兰宽松许可证 MulanPSL-2.0）进行二次开发与修改。
+
+在此向原作者表示衷心感谢：
+
+- **原始项目**：[wttAndroid/web-resume-resume](https://github.com/wttAndroid/web-resume-resume)
+- **原作者**：[@wttAndroid](https://github.com/wttAndroid)
+- **许可证**：MulanPSL-2.0（木兰宽松许可证）
+
+本项目在原项目基础上进行了以下修改：
+- 替换个人信息为占位符，清除隐私数据
+- 调整部分页面内容与布局
+- 优化部分交互逻辑
+
+原始的 Canvas 星空动画、蝴蝶加载动画、花瓣特效等核心视觉设计均来自原项目。
+
 ## 功能页面
 
 | 页面 | 文件 | 说明 |
@@ -128,4 +145,7 @@
 
 ## 许可证
 
-MIT License
+本项目基于 [wttAndroid/web-resume-resume](https://github.com/wttAndroid/web-resume-resume)（MulanPSL-2.0）二次开发，遵循木兰宽松许可证第2版。
+
+- 原始许可证：MulanPSL-2.0
+- 本修改版本同样遵循 MulanPSL-2.0 许可证
