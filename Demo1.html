@@ -1,378 +1,462 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
-
-<head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Paper.js 特效演示 - LIEM 创意实验">
-  <title>Paper.js 特效 | LIEM</title>
-  <link rel="stylesheet" href="./css/base.css">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-  <style>
-    /* 特效页面样式 */
-    .demo-page {
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-    }
-
-    .demo-header {
-      padding: var(--space-6) var(--content-padding-x);
-      background: var(--bg-glass);
-      backdrop-filter: blur(20px);
-      -webkit-backdrop-filter: blur(20px);
-      border-bottom: 1px solid var(--border-subtle);
-      position: sticky;
-      top: 0;
-      z-index: var(--z-sticky);
-    }
-
-    .demo-header__inner {
-      max-width: var(--container-max);
-      margin: 0 auto;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-
-    .demo-header__back {
-      display: inline-flex;
-      align-items: center;
-      gap: var(--space-2);
-      padding: var(--space-2) var(--space-4);
-      font-size: var(--text-sm);
-      color: var(--text-secondary);
-      background: var(--bg-secondary);
-      border: 1px solid var(--border-default);
-      border-radius: var(--radius-md);
-      transition: all var(--duration-fast) var(--ease-default);
-    }
-
-    .demo-header__back:hover {
-      color: var(--accent-primary);
-      border-color: var(--accent-primary);
-      background: var(--accent-soft);
-      transform: translateX(-2px);
-    }
-
-    .demo-header__back svg {
-      width: 16px;
-      height: 16px;
-    }
-
-    .demo-header__title {
-      font-size: var(--text-lg);
-      font-weight: var(--weight-semibold);
-    }
-
-    .demo-header__title span {
-      color: var(--accent-primary);
-    }
-
-    .demo-canvas-container {
-      flex: 1;
-      position: relative;
-      overflow: hidden;
-    }
-
-    #paper-canvas {
-      width: 100%;
-      height: 100%;
-      display: block;
-    }
-
-    .demo-info {
-      position: absolute;
-      bottom: var(--space-6);
-      left: 50%;
-      transform: translateX(-50%);
-      text-align: center;
-      pointer-events: none;
-    }
-
-    .demo-info__title {
-      font-size: var(--text-2xl);
-      font-weight: var(--weight-bold);
-      margin-bottom: var(--space-2);
-      background: var(--gradient-accent);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-    }
-
-    .demo-info__desc {
-      font-size: var(--text-sm);
-      color: var(--text-secondary);
-      opacity: 0.8;
-    }
-
-    .demo-controls {
-      position: absolute;
-      top: var(--space-6);
-      right: var(--space-6);
-      display: flex;
-      gap: var(--space-3);
-      z-index: var(--z-elevated);
-    }
-
-    .demo-btn {
-      width: 44px;
-      height: 44px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      background: var(--bg-secondary);
-      border: 1px solid var(--border-default);
-      border-radius: var(--radius-md);
-      color: var(--text-secondary);
-      cursor: pointer;
-      transition: all var(--duration-fast) var(--ease-default);
-    }
-
-    .demo-btn:hover {
-      color: var(--accent-primary);
-      border-color: var(--accent-primary);
-      background: var(--accent-soft);
-    }
-
-    .demo-btn svg {
-      width: 18px;
-      height: 18px;
-    }
-
-    @media (max-width: 640px) {
-      .demo-header__title {
-        font-size: var(--text-base);
-      }
-
-      .demo-info__title {
-        font-size: var(--text-xl);
-      }
-    }
-  </style>
-</head>
-
-<body class="demo-page">
-  <!-- 头部导航 -->
-  <header class="demo-header">
-    <div class="demo-header__inner">
-      <a href="./index.html" class="demo-header__back">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <line x1="19" y1="12" x2="5" y2="12"></line>
-          <polyline points="12 19 5 12 12 5"></polyline>
-        </svg>
-        返回
-      </a>
-      <h1 class="demo-header__title">Paper.js <span>特效实验</span></h1>
-      <div style="width: 80px;"></div>
-    </div>
-  </header>
-
-  <!-- Canvas 容器 -->
-  <div class="demo-canvas-container">
-    <canvas id="paper-canvas" resize="true"></canvas>
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     
-    <!-- 控制按钮 -->
-    <div class="demo-controls">
-      <button class="demo-btn" onclick="resetEffect()" title="重置特效">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <polyline points="23 4 23 10 17 10"></polyline>
-          <path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"></path>
-        </svg>
-      </button>
-    </div>
-
-    <!-- 信息文字 -->
-    <div class="demo-info">
-      <h2 class="demo-info__title">迷失在太空中的三角形</h2>
-      <p class="demo-info__desc">移动鼠标与粒子互动 · 点击创建新三角形</p>
-    </div>
-  </div>
-
-  <script type="text/javascript" src="./js/paper-full.min.js"></script>
-  <script type="text/javascript">
-    /**
-     * 初始化 Paper.js 特效
-     */
-    paper.install(window);
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <!-- <link rel="stylesheet" href="./asd.css"> -->
+<style>
+    html {
+        height: 100%;
+    }
     
-    var canvas = document.getElementById('paper-canvas');
-    paper.setup(canvas);
-
-    var triangles = [];
-    var triangleCount = 25;
-    var mousePos = new paper.Point(0, 0);
-    var mouseRadius = 150;
-
-    /**
-     * 创建随机三角形
-     * @param {paper.Point} position - 位置
-     * @returns {paper.Path} 三角形路径
-     */
-    function createTriangle(position) {
-      var size = Math.random() * 30 + 10;
-      var triangle = new Path.RegularPolygon({
-        center: position || new paper.Point(
-          Math.random() * view.size.width,
-          Math.random() * view.size.height
-        ),
-        sides: 3,
-        radius: size,
-        fillColor: {
-          gradient: {
-            stops: [
-              new paper.Color(0.13, 0.83, 0.93, 0.6),
-              new paper.Color(0.05, 0.65, 0.91, 0.3)
-            ]
-          },
-          origin: new paper.Point(0, 0),
-          destination: new paper.Point(size, size)
-        },
-        strokeColor: new paper.Color(0.13, 0.83, 0.93, 0.8),
-        strokeWidth: 1
-      });
-
-      triangle.data = {
-        velocity: new paper.Point(
-          (Math.random() - 0.5) * 2,
-          (Math.random() - 0.5) * 2
-        ),
-        rotationSpeed: (Math.random() - 0.5) * 2,
-        size: size,
-        originalScale: 1
-      };
-
-      return triangle;
+    body {
+        background: #26394E;
+        height: 100%;
+        font-size: 14px;
+        /* overflow: hidden; */
+        border: 1px solid #ff000000;
+        margin: 0px;
     }
-
-    /**
-     * 初始化所有三角形
-     */
-    function initTriangles() {
-      for (var i = 0; i < triangleCount; i++) {
-        triangles.push(createTriangle());
-      }
+    
+    ul {
+        list-style: none;
+        padding: 0px;
     }
-
-    /**
-     * 重置特效
-     */
-    function resetEffect() {
-      for (var i = 0; i < triangles.length; i++) {
-        triangles[i].remove();
-      }
-      triangles = [];
-      initTriangles();
+    
+    a {
+        display: inline-block;
+        height: 100%;
+        width: 100%;
+        text-decoration: none;
+        color: inherit;
+        text-align: center;
     }
+    
+    h2 {
+        margin-top: 100px;
+        text-align: center;
+        color: #fed057;
+    }
+    
+    .header {
+        background-color: antiquewhite;
+    }
+    
+    .list-box {
+        color: #999999;
+        display: flex;
+        justify-content: center;
+        background-color: black;
+        height: 50px;
+        line-height: 50px;
+    }
+    
+    .list-box::after {
+        content: '';
+        clear: both;
+        height: 0px;
+        display: inline-block;
+    }
+    
+    .list-box>li {
+        position: relative;
+        float: left;
+        width: 100px;
+    }
+    
+    .list-box a {
+        position: relative;
+        overflow: hidden;
+    }
+    
+    .list-box a>span {
+        display: inline-block;
+        left: 0px;
+        right: 0px;
+        transition: top .3s ease;
+    }
+    
+    .list-box a>span.top {
+        position: absolute;
+        top: -50px;
+        background-color: #fed057;
+        color: white;
+    }
+    
+    .list-box a>span.bottm {
+        position: absolute;
+        top: 0px;
+    }
+    /* .list-box li.active span.top {
+        top: 0px;
+    }
+    
+    .list-box li.active span.bottm {
+        top: 50px;
+    } */
+    
+    .list-box li:hover span.top {
+        top: 0px;
+    }
+    
+    .list-box li:hover span.bottm {
+        top: 50px;
+    }
+    
+    .list-box>li:hover .li-box {
+        display: block;
+    }
+    
+    .li-box {
+        display: none;
+        top: 50px;
+        position: absolute;
+        width: 200px;
+        /* height: 200px; */
+        background-color: black;
+        left: 0px;
+    }
+    
+    .li-box>ul {
+        height: 100%;
+        color: aliceblue;
+    }
+    
+    .li-box>ul>li:not(:last-child) {
+        border-bottom: 1px #252525 dashed;
+    }
+    
+    .li-box>ul>li {
+        display: block;
+        padding-left: 20px;
+    }
+    
+    .li-box>ul>li:hover {
+        background-color: #fed057;
+        color: white;
+    }
+    
+    hr {
+        display: inline-block;
+        width: 1px;
+        background-color: #252525;
+        height: 20px;
+        vertical-align: middle;
+        margin: 15px 0px;
+        padding: 0px;
+        border: 0px;
+    }
+    /* .content-box ul {
+        position: relative;
+    }
+    
+    .content-box ul>div {} */
+    
+    .content-box>ul>li {
+        /* position: relative; */
+        height: 50px;
+        line-height: 50px;
+    }
+    
+    .content-box>ul>li a {
+        text-align: left !important;
+        position: relative;
+    }
+    
+    .content-box>ul>li a i,
+    .content-box>ul>li a span {
+        font-size: 11px;
+        margin-left: 10px;
+        color: #969696;
+    }
+    
+    .content-box>ul>li a i {
+        position: absolute;
+        right: 10px;
+    }
+    
+    .content-box>ul>li:hover div {
+        display: block;
+    }
+    
+    .content-box>ul>li div {
+        display: none;
+        position: absolute;
+        top: 0px;
+        left: 100%;
+        width: 120px;
+        padding: 2px 20px;
+        min-height: 98%;
+        background-color: #ffffff;
+        border: 2px solid black;
+        color: black;
+        min-width: 500px;
+    }
+    
+    .content-box>ul>li div>span {
+        width: 19%;
+        display: inline-block;
+        text-align: center;
+    }
+</style></head>
 
-    // 初始化
-    initTriangles();
 
-    /**
-     * 每帧动画更新
-     */
-    view.onFrame = function(event) {
-      for (var i = 0; i < triangles.length; i++) {
-        var triangle = triangles[i];
-        var data = triangle.data;
 
-        // 鼠标交互
-        var dist = triangle.position.getDistance(mousePos);
-        if (dist < mouseRadius) {
-          var force = (mouseRadius - dist) / mouseRadius;
-          var direction = triangle.position.subtract(mousePos).normalize();
-          data.velocity = data.velocity.add(direction.multiply(force * 0.5));
-          
-          // 放大效果
-          var targetScale = 1 + force * 0.5;
-          triangle.scaling = triangle.scaling.add(
-            (targetScale - triangle.scaling.x) * 0.1
-          );
-        } else {
-          // 恢复原大小
-          triangle.scaling = triangle.scaling.add(
-            (1 - triangle.scaling.x) * 0.05
-          );
-        }
+<body>
+    <h2>导航栏</h2>
+    <div class="header">
+        <ul class="list-box">
+            <li>
+                <a>
+                    <span class="top">首页</span>
+                    <span class="bottm">首页</span>
+                </a>
+                <div class="li-box content-box">
+                    <ul>
+                        <li><a>美食<span>地方菜</span><span>火锅</span><i>&gt;</i></a>
+                            <div>
+                                <span>全部(117)</span>
+                                <span>火锅(17)</span>
+                                <span>烧烤(16)</span>
+                                <span>干果</span>
+                                <span>休闲零食</span>
+                                <span>饼干</span>
+                                <span>菜肴</span>
+                                <span>糕点</span>
+                                <span>肉制食品</span>
+                                <span>茶饮冲泡</span>
+                                <span>全部(117)</span>
+                                <span>火锅(17)</span>
+                                <span>烧烤(16)</span>
+                                <span>干果</span>
+                                <span>休闲零食</span>
+                                <span>饼干</span>
+                                <span>菜肴</span>
+                                <span>糕点</span>
+                                <span>肉制食品</span>
+                                <span>茶饮冲泡</span>
+                            </div>
+                        </li>
+                        <li><a>休闲<span>电影</span><span>KTV</span><i>&gt;</i></a>
+                            <div>
+                                <span>茶艺</span>
+                                <span>插花</span>
+                                <span>炊事用品</span>
+                                <span>装饰用品</span>
+                                <span>化妆用品</span>
+                                <span>茶艺</span>
+                                <span>插花</span>
+                                <span>炊事用品</span>
+                                <span>装饰用品</span>
+                                <span>化妆用品</span>
+                                <span>茶艺</span>
+                                <span>插花</span>
+                                <span>炊事用品</span>
+                                <span>装饰用品</span>
+                                <span>化妆用品</span>
+                                <span>茶艺</span>
+                                <span>插花</span>
+                                <span>炊事用品</span>
+                                <span>装饰用品</span>
+                                <span>化妆用品</span>
+                                <span>茶艺</span>
+                                <span>插花</span>
+                                <span>炊事用品</span>
+                                <span>装饰用品</span>
+                                <span>化妆用品</span>
+                            </div>
+                        </li>
+                        <li><a>旅游<span>酒店</span><span>旅游</span><i>&gt;</i></a>
+                            <div>
+                                <span>摄像</span>
+                                <span>收藏</span>
+                                <span>茶艺</span>
+                                <span>插花</span>
+                                <span>脑筋急转弯</span>
+                                <span>卡拉OK</span>
+                                <span>谜语</span>
+                                <span>谜语</span>
+                                <span>摄像</span>
+                                <span>收藏</span>
+                                <span>茶艺</span>
+                                <span>插花</span>
+                                <span>脑筋急转弯</span>
+                                <span>卡拉OK</span>
+                                <span>谜语</span>
+                                <span>谜语</span>
+                                <span>摄像</span>
+                                <span>收藏</span>
+                                <span>茶艺</span>
+                                <span>插花</span>
+                                <span>脑筋急转弯</span>
+                                <span>卡拉OK</span>
+                                <span>谜语</span>
+                                <span>谜语</span>
+                                <span>摄像</span>
+                                <span>收藏</span>
+                                <span>茶艺</span>
+                                <span>插花</span>
+                                <span>脑筋急转弯</span>
+                                <span>卡拉OK</span>
+                                <span>谜语</span>
+                                <span>谜语</span>
+                            </div>
+                        </li>
+                        <li><a>生活<span>婚纱摄影</span><span>写真</span><i>&gt;</i></a>
+                            <div>
+                                <span>洗漱用品</span>
+                                <span>炊事用品</span>
+                                <span>装饰用品</span>
+                                <span>化妆用品</span>
+                                <span>床上用品</span>
+                                <span>洗漱用品</span>
+                                <span>炊事用品</span>
+                                <span>装饰用品</span>
+                                <span>化妆用品</span>
+                                <span>床上用品</span>
+                                <span>洗漱用品</span>
+                                <span>炊事用品</span>
+                                <span>装饰用品</span>
+                                <span>化妆用品</span>
+                                <span>床上用品</span>
+                                <span>洗漱用品</span>
+                                <span>炊事用品</span>
+                                <span>装饰用品</span>
+                                <span>化妆用品</span>
+                                <span>床上用品</span>
+                            </div>
+                        </li>
+                        <li><a>商品<span>服装</span><span>鞋靴</span><i>&gt;</i></a>
+                            <div>
+                                <span>男服</span>
+                                <span>女服</span>
+                                <span>中老年人服</span>
+                                <span>儿童服</span>
+                                <span>幼童服</span>
+                                <span>男服</span>
+                                <span>女服</span>
+                                <span>中老年人服</span>
+                                <span>儿童服</span>
+                                <span>幼童服</span>
+                                <span>男服</span>
+                                <span>女服</span>
+                                <span>中老年人服</span>
+                                <span>儿童服</span>
+                                <span>幼童服</span>
+                                <span>男服</span>
+                                <span>女服</span>
+                                <span>中老年人服</span>
+                                <span>儿童服</span>
+                                <span>幼童服</span>
+                            </div>
+                        </li>
+                        <li><a>热门搜索<span>美食</span><span>游泳</span><span>美食</span><span>游泳</span></a>
+                        </li>
+                    </ul>
+                </div>
+            </li>
+            <hr>
+            <li>
+                <a>
+                    <span class="top">企业文化</span>
+                    <span class="bottm">企业文化</span>
+                </a>
+            </li>
+            <hr>
+            <li>
+                <a href="">
+                    <span class="top">产品展示</span>
+                    <span class="bottm">产品展示</span>
+                </a>
+                <div class="li-box">
+                    <ul>
+                        <li>普通产品</li>
+                        <li>会员产品</li>
+                        <li>普通产品</li>
+                        <li>会员产品</li>
+                        <li>普通产品</li>
+                        <li>会员产品</li>
+                    </ul>
+                </div>
+            </li>
+            <hr>
+            <li>
+                <a href="">
+                    <span class="top">新闻中心</span>
+                    <span class="bottm">新闻中心</span>
+                </a>
+                <div class="li-box">
+                    <ul>
+                        <li>娱乐新闻</li>
+                        <li>政治新闻</li>
+                        <li>社会新闻</li>
+                        <li>娱乐新闻</li>
+                        <li>政治新闻</li>
+                        <li>社会新闻</li>
+                    </ul>
+                </div>
+            </li>
+            <hr>
+            <li>
+                <a href="">
+                    <span class="top">阳光服务</span>
+                    <span class="bottm">阳光服务</span>
+                </a>
+                <div class="li-box">
+                    <ul>
+                        <li>123</li>
+                        <li>456</li>
+                        <li>789</li>
+                    </ul>
+                </div>
+            </li>
+            <hr>
+            <li>
+                <a href="">
+                    <span class="top">加盟代理</span>
+                    <span class="bottm">加盟代理</span>
+                </a>
+                <div class="li-box">
+                    <ul>
+                        <li>联系网址：www.123.com</li>
+                        <li>加盟须知</li>
+                        <li>了解以下</li>
+                    </ul>
+                </div>
+            </li>
+            <hr>
+            <li>
+                <a href="">
+                    <span class="top">在线咨询</span>
+                    <span class="bottm">在线咨询</span>
+                </a>
+                <div class="li-box">
+                    <ul>
+                        <li>邮箱：your-email@example.com</li>
+                        <li>电话：your-phone-number</li>
+                        <li>微信：your-wechat-id</li>
+                    </ul>
+                </div>
+            </li>
+            <hr>
+            <li>
+                <a>
+                    <span class="top">企业文化</span>
+                    <span class="bottm">企业文化</span>
+                </a>
+            </li>
+            <hr>
+            <li>
+                <a>
+                    <span class="top">企业文化</span>
+                    <span class="bottm">企业文化</span>
+                </a>
+            </li>
+            <hr>
+        </ul>
+    </div>
 
-        // 移动
-        triangle.position = triangle.position.add(data.velocity);
 
-        // 旋转
-        triangle.rotation += data.rotationSpeed;
 
-        // 速度衰减
-        data.velocity = data.velocity.multiply(0.98);
-
-        // 边界反弹
-        if (triangle.position.x < -50) {
-          triangle.position.x = view.size.width + 50;
-        }
-        if (triangle.position.x > view.size.width + 50) {
-          triangle.position.x = -50;
-        }
-        if (triangle.position.y < -50) {
-          triangle.position.y = view.size.height + 50;
-        }
-        if (triangle.position.y > view.size.height + 50) {
-          triangle.position.y = -50;
-        }
-      }
-    };
-
-    /**
-     * 鼠标移动事件
-     */
-    window.addEventListener('mousemove', function(event) {
-      var rect = canvas.getBoundingClientRect();
-      mousePos.x = event.clientX - rect.left;
-      mousePos.y = event.clientY - rect.top;
-    });
-
-    /**
-     * 触摸移动事件
-     */
-    window.addEventListener('touchmove', function(event) {
-      if (event.touches.length > 0) {
-        var rect = canvas.getBoundingClientRect();
-        mousePos.x = event.touches[0].clientX - rect.left;
-        mousePos.y = event.touches[0].clientY - rect.top;
-      }
-    });
-
-    /**
-     * 点击创建新三角形
-     */
-    canvas.addEventListener('click', function(event) {
-      var rect = canvas.getBoundingClientRect();
-      var pos = new paper.Point(
-        event.clientX - rect.left,
-        event.clientY - rect.top
-      );
-      var newTriangle = createTriangle(pos);
-      newTriangle.data.velocity = new paper.Point(
-        (Math.random() - 0.5) * 4,
-        (Math.random() - 0.5) * 4
-      );
-      triangles.push(newTriangle);
-
-      // 限制最大数量
-      if (triangles.length > 50) {
-        triangles[0].remove();
-        triangles.shift();
-      }
-    });
-
-    /**
-     * 窗口大小变化
-     */
-    window.addEventListener('resize', function() {
-      view.setViewSize(canvas.offsetWidth, canvas.offsetHeight);
-    });
-  </script>
-</body>
-
-</html>
+</body></html>

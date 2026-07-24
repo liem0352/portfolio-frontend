@@ -17,7 +17,7 @@ $(document).ready(function () {
  */
 function initPortfolioFilter() {
   $('.filter-btn').on('click', function () {
-    var filter = $(this).data('filter');
+    var filter = $(this).attr('data-filter');
 
     // 更新按钮状态
     $('.filter-btn').removeClass('active');
@@ -27,14 +27,16 @@ function initPortfolioFilter() {
     var $works = $('.work-card');
 
     if (filter === 'all') {
-      $works.fadeIn(300);
+      $works.each(function () {
+        $(this).css('display', '');
+      });
     } else {
       $works.each(function () {
-        var category = $(this).data('category');
+        var category = $(this).attr('data-category');
         if (category === filter) {
-          $(this).fadeIn(300);
+          $(this).css('display', '');
         } else {
-          $(this).fadeOut(200);
+          $(this).css('display', 'none');
         }
       });
     }
@@ -56,8 +58,10 @@ function initImageModal() {
     var imgSrc = $(this).find('img').attr('src');
     var imgAlt = $(this).find('img').attr('alt');
 
+    if (!imgSrc) return;
+
     modalImage.attr('src', imgSrc);
-    modalImage.attr('alt', imgAlt);
+    modalImage.attr('alt', imgAlt || '');
     imageModal.addClass('open');
     $('body').css('overflow', 'hidden');
   });
@@ -79,7 +83,7 @@ function initImageModal() {
 
   // ESC 键关闭
   $(document).on('keydown', function (e) {
-    if (e.key === 'Escape' && imageModal.hasClass('open')) {
+    if (e.keyCode === 27 && imageModal.hasClass('open')) {
       closeImageModal();
     }
   });

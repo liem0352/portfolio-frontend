@@ -1,234 +1,225 @@
-/**
- * 基础通用脚本
- * 包含导航栏、加载动画、移动端菜单、滚动动画等通用功能
- */
 (function () {
-  'use strict';
+  initActive() // 初始化活动状态
+  bindEvenInit() // 绑定事件初始化
+  var mycard = $('#mycard') // 获取ID为mycard的元素
+  
+  // 获取mycard元素的顶部偏移量
+  let mycardTop = mycard && mycard.offset() && mycard.offset().top;
 
-  // 立即执行初始化（确保无论脚本加载时机都能正常工作）
-  initLoader();
-
-  // DOM 加载完成后初始化其余功能
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', init);
-  } else {
-    init();
-  }
-
-  /**
-   * 初始化所有功能
-   */
-  function init() {
-    initNavbar();
-    initMobileMenu();
-    initScrollAnimations();
-    initSmoothScroll();
-  }
-
-  /**
-   * 初始化页面加载动画
-   * 页面加载完成后渐隐加载遮罩
-   */
-  function initLoader() {
-    var loader = document.getElementById('loader');
-    if (!loader) return;
-
-    function hide() {
-      hideLoader();
+  // 添加滚动事件监听
+  window.onscroll = function () {
+    var e = e || window.event; // 兼容性处理
+    var scrollTop = document.documentElement.scrollTop || document.body.scrollTop; // 获取当前滚动条位置
+    console.log(scrollTop); // 打印当前滚动位置
+    // 判断滚动位置是否超过mycard的顶部位置
+    // if (scrollTop > mycardTop && window.innerWidth > 1200) {
+    if (window.innerWidth > 1200) {
+      mycard.addClass('scroll'); // 如果超过，添加scroll类
+    } else{
+      mycard.removeClass('scroll'); // 否则，移除scroll类
     }
+  }
 
-    // 兜底方案：3秒后强制隐藏，防止一直卡在加载状态
-    setTimeout(hide, 3000);
+  // 初始化活动状态的函数
+  function initActive () {
+    let root = document.querySelector(':root'); // 获取根元素
+    var active = sessionStorage.getItem('wttandroid'); // 从sessionStorage中获取活动状态
+    
+    // 判断用户是否为非第一次登录且状态为开启灯（白色）
+    if (active && active == 'true') {
+      $('#myRadio').removeClass('active'); // 移除myRadio的active类
+      $('.navigation').removeClass('active'); // 移除navigation的active类
 
-    if (document.readyState === 'complete') {
-      // 页面已经加载完成，直接隐藏
-      setTimeout(hide, 300);
+      // 设置CSS变量为白色主题
+      root.style.setProperty('--backColor', '#fff');
+      root.style.setProperty('--borderline', '#fff');
+      root.style.setProperty('--headerCOlor', '#fff');
+      root.style.setProperty('--headerhover', 'rgb(255, 255, 255,.8)');
+      root.style.setProperty('--headerFont', '#00283A' );
+      root.style.setProperty('--fontColor', '#fff' );
+      root.style.setProperty('--mainColor', '#ff8181' );
+      root.style.setProperty('--bagColor', '#f4f5f7');
+    } else { // 第一次登录或是黑色主题时，设置为黑色主题
+      $('#myRadio').addClass('active'); // 添加myRadio的active类
+      $('.navigation').addClass('active'); // 添加navigation的active类
+      
+      // 设置CSS变量为黑色主题
+      root.style.setProperty('--backColor', '#fff');
+      root.style.setProperty('--borderline', '#00283A');
+      root.style.setProperty('--headerCOlor', '#00283A');
+      root.style.setProperty('--headerhover', 'rgb(0, 40, 58,.8)');
+      root.style.setProperty('--headerFont', '#fff' );
+      root.style.setProperty('--fontColor', '#00283A' );
+      root.style.setProperty('--mainColor', '#ff8181' );
+      root.style.setProperty('--bagColor','#02162b');
+    }
+  }
+
+  // 绑定myRadio点击事件
+  $('#myRadio').click(function () {
+    let root = document.querySelector(':root'); // 获取根元素
+
+    // 判断myRadio是否有active类
+    if ($('#myRadio').hasClass('active')) { // 如果是黑色，将其更改为白色
+      sessionStorage.setItem('wttandroid', true); // 保存状态为true
+      
+      $('#myRadio').removeClass('active'); // 移除active类
+      $('.navigation').removeClass('active'); // 移除导航的active类
+
+      // 设置CSS变量为白色主题
+      root.style.setProperty('--backColor', '#fff');
+      root.style.setProperty('--borderline', '#fff');
+      root.style.setProperty('--headerCOlor', '#fff');
+      root.style.setProperty('--headerhover', 'rgb(255, 255, 255,.8)');
+      root.style.setProperty('--headerFont', '#00283A' );
+      root.style.setProperty('--fontColor', '#fff' );
+      root.style.setProperty('--mainColor', '#ff8181' );
+      root.style.setProperty('--bagColor', '#f4f5f7');
+
+    } else { // 如果是白色，将其更改为黑色
+      sessionStorage.setItem('wttandroid', false); // 保存状态为false
+      
+      $('#myRadio').addClass('active'); // 添加active类
+      $('.navigation').addClass('active'); // 添加导航的active类
+      
+      // 设置CSS变量为黑色主题
+      root.style.setProperty('--backColor', '#fff');
+      root.style.setProperty('--borderline', '#00283A');
+      root.style.setProperty('--headerCOlor', '#00283A');
+      root.style.setProperty('--headerhover', 'rgb(0, 40, 58,.8)');
+      root.style.setProperty('--headerFont', '#fff' );
+      root.style.setProperty('--fontColor', '#00283A' );
+      root.style.setProperty('--mainColor', '#ff8181' );
+      root.style.setProperty('--bagColor','#02162b');
+    }
+  })
+
+  // 绑定遮罩层关闭事件
+  $('#zhezhao>.close').click(function () {
+    console.log('遮罩层'); // 打印遮罩层点击信息
+    if ($('#zhezhao').hasClass('active')) { // 如果遮罩层是激活状态
+      $('#zhezhao').removeClass('active'); // 移除激活状态
+      document.getElementById('videoResumeC').pause(); // 暂停视频
     } else {
-      // 等待页面加载完成
-      window.addEventListener('load', function () {
-        setTimeout(hide, 300);
-      });
-      // DOM 就绪也触发一次（防止某些资源加载失败导致 load 事件不触发）
-      if (document.readyState === 'interactive') {
-        setTimeout(hide, 800);
-      } else {
-        document.addEventListener('DOMContentLoaded', function () {
-          setTimeout(hide, 800);
-        });
-      }
+      $('#zhezhao').addClass('active'); // 添加激活状态
     }
-  }
-
-  /**
-   * 隐藏加载动画
-   */
-  function hideLoader() {
-    var loader = document.getElementById('loader');
-    if (!loader) return;
-
-    loader.classList.add('hidden');
-    setTimeout(function () {
-      loader.style.display = 'none';
-    }, 500);
-  }
-
-  /**
-   * 初始化导航栏滚动效果
-   * 滚动时添加背景和阴影
-   */
-  function initNavbar() {
-    var navbar = document.getElementById('navbar');
-    if (!navbar) return;
-
-    var lastScroll = 0;
-    var scrollThreshold = 50;
-
-    window.addEventListener('scroll', function () {
-      var currentScroll = window.pageYOffset || document.documentElement.scrollTop;
-
-      if (currentScroll > scrollThreshold) {
-        navbar.classList.add('nav--scrolled');
-      } else {
-        navbar.classList.remove('nav--scrolled');
-      }
-
-      lastScroll = currentScroll;
-    }, { passive: true });
-  }
-
-  /**
-   * 初始化移动端菜单切换
-   */
-  function initMobileMenu() {
-    var navToggle = document.getElementById('navToggle');
-    var navLinks = document.getElementById('navLinks');
-    if (!navToggle || !navLinks) return;
-
-    navToggle.addEventListener('click', function () {
-      navToggle.classList.toggle('active');
-      navLinks.classList.toggle('active');
-    });
-
-    // 点击导航链接后关闭移动端菜单
-    var links = navLinks.querySelectorAll('.nav__link');
-    links.forEach(function (link) {
-      link.addEventListener('click', function () {
-        navToggle.classList.remove('active');
-        navLinks.classList.remove('active');
-      });
-    });
-  }
-
-  /**
-   * 初始化滚动动画
-   * 元素进入视口时添加动画类
-   */
-  function initScrollAnimations() {
-    var animatedElements = document.querySelectorAll('.card, .section__header, .skill-card, .work-card, .stat-card, .timeline__item');
-    if (animatedElements.length === 0) return;
-
-    // 添加初始状态
-    animatedElements.forEach(function (el) {
-      el.style.opacity = '0';
-      el.style.transform = 'translateY(30px)';
-      el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
-    });
-
-    // 使用 Intersection Observer 检测元素进入视口
-    if ('IntersectionObserver' in window) {
-      var observer = new IntersectionObserver(function (entries) {
-        entries.forEach(function (entry) {
-          if (entry.isIntersecting) {
-            entry.target.style.opacity = '1';
-            entry.target.style.transform = 'translateY(0)';
-            observer.unobserve(entry.target);
-          }
-        });
-      }, {
-        threshold: 0.1,
-        rootMargin: '0px 0px -50px 0px'
-      });
-
-      animatedElements.forEach(function (el) {
-        observer.observe(el);
-      });
+  })
+  
+  // 绑定最小菜单点击事件
+  $('#minmenu').click(function () {
+    console.log('遮罩层'); // 打印菜单点击信息
+    if ($('#minmenu').hasClass('active')) { // 如果最小菜单是激活状态
+      $('#minmenu').removeClass('active'); // 移除激活状态
+      $('.menu_list').removeClass('active'); // 移除菜单列表激活状态
     } else {
-      // 降级方案：直接显示所有元素
-      animatedElements.forEach(function (el) {
-        el.style.opacity = '1';
-        el.style.transform = 'translateY(0)';
-      });
+      $('#minmenu').addClass('active'); // 添加激活状态
+      $('.menu_list').addClass('active'); // 添加菜单列表激活状态
     }
-  }
-
-  /**
-   * 初始化平滑滚动
-   * 支持锚点链接的平滑滚动
-   */
-  function initSmoothScroll() {
-    var anchorLinks = document.querySelectorAll('a[href^="#"]');
-    if (anchorLinks.length === 0) return;
-
-    anchorLinks.forEach(function (link) {
-      link.addEventListener('click', function (e) {
-        var targetId = this.getAttribute('href');
-        if (targetId === '#' || targetId.length < 2) return;
-
-        var target = document.querySelector(targetId);
-        if (!target) return;
-
-        e.preventDefault();
-        var offsetTop = target.offsetTop - 80; // 减去导航栏高度
-        window.scrollTo({
-          top: offsetTop,
-          behavior: 'smooth'
-        });
-      });
-    });
-  }
-
-  // 暴露全局函数
-  window.showToast = function (message, duration) {
-    duration = duration || 2000;
-
-    var toast = document.createElement('div');
-    toast.className = 'toast';
-    toast.textContent = message;
-    toast.style.cssText = [
-      'position: fixed',
-      'top: 20px',
-      'left: 50%',
-      'transform: translateX(-50%) translateY(-100px)',
-      'background: var(--bg-tertiary, #1a2330)',
-      'color: var(--text-primary, #f0f4f8)',
-      'padding: 12px 24px',
-      'border-radius: 8px',
-      'font-size: 14px',
-      'z-index: 9999',
-      'box-shadow: 0 4px 12px rgba(0,0,0,0.3)',
-      'transition: transform 0.3s ease, opacity 0.3s ease',
-      'opacity: 0'
-    ].join(';');
-
-    document.body.appendChild(toast);
-
-    // 显示
-    requestAnimationFrame(function () {
-      toast.style.transform = 'translateX(-50%) translateY(0)';
-      toast.style.opacity = '1';
-    });
-
-    // 自动隐藏
-    setTimeout(function () {
-      toast.style.transform = 'translateX(-50%) translateY(-100px)';
-      toast.style.opacity = '0';
-      setTimeout(function () {
-        if (toast.parentNode) {
-          toast.parentNode.removeChild(toast);
+  })
+  
+  // 页面加载完成后的处理
+  document.onreadystatechange = function () {
+    if (document.readyState == 'complete') {
+      let opacity = $('.lodding-wrap').css('opacity'); // 获取加载框的透明度
+      let timer = null;
+      timer = opacity && setInterval(() => {
+        opacity -= 0.1; // 每次减少透明度
+        $('.lodding-wrap').css('opacity', opacity); // 更新透明度
+        console.log(opacity); // 打印透明度
+        if (opacity <= 0) { // 如果透明度小于等于0
+          $('.lodding-wrap').css('display', 'none'); // 隐藏加载框
+          clearInterval(timer); // 清除定时器
         }
-      }, 300);
-    }, duration);
-  };
+      }, 100); // 设置每100毫秒执行一次
+    }
+  }
 
-  window.hideLoader = hideLoader;
+  // 锚点定位初始化
+  function bindEvenInit(){
+    $('.navbtn').bind("click touch", function () {
+      // 滚动到与$(this).attr('href')锚点关联的id所在位置
+      $('html,body').animate({scrollTop: ($($(this).attr('href')).offset().top - 100)}, 500);
+      return false; // 阻止默认事件
+    });
+  }
+
+  // 获取模态框
+  var modal = document.getElementById("image-modal");
+  var modalImg = document.getElementById("modal-image");
+  // 获取关闭按钮
+  var closeBtn = document.getElementById("close-modal");
+
+  // 为每个图片添加点击事件
+  var images = document.querySelectorAll('.li1-box-item img');
+  images.forEach(function(image) {
+    image.onclick = function() {
+      modal.style.display = "block";
+      modalImg.src = this.src;
+    }
+  });
+
+  if(modal != null){
+    // 当点击关闭按钮时，隐藏模态框
+closeBtn.onclick = function() {
+  modal.style.display = "none";
+}
+}
+
+  // 当在模态框以外的地方点击时也隐藏模态框
+  window.onclick = function(event) {
+    if (event.target == modal) {
+      modal.style.display = "none";
+    }
+  }
+  function openImage(element) {
+    const img = element.querySelector('img').src; // 获取点击的图片路径
+    const magnifiedImg = document.getElementById('magnifiedImg');
+    magnifiedImg.src = img; // 设置放大镜中的图片
+    document.getElementById('magnifier').style.display = 'flex'; // 显示放大镜
+}
+
+function closeMagnifier() {
+    document.getElementById('magnifier').style.display = 'none'; // 关闭放大镜
+}
 })();
+
+// 控制星星洒落的函数
+function scatterStars(event) {
+    for (var i = 0; i < 5; i++) { // 每次鼠标移动洒下5颗星星，可调整数量
+        var star = createStar();
+        star.style.left = event.pageX + 'px';
+        star.style.top = event.pageY + 'px';
+        moveStar(star);
+    }
+}
+
+// 控制单个星星动画的函数
+function moveStar(star) {
+    var speedX = (Math.random() - 0.5) * 5; // 水平速度有正有负
+    var speedY = 1 + Math.random() * 3; // 垂直速度向下
+    function animate() {
+        star.style.left = parseFloat(star.style.left) + speedX + 'px';
+        star.style.top = parseFloat(star.style.top) + speedY + 'px';
+        star.style.opacity -= 0.02; // 逐渐消失
+        if (star.style.opacity <= 0) {
+            star.remove();
+        } else {
+            requestAnimationFrame(animate);
+        }
+    }
+    animate();
+}
+
+// 创建星星的函数
+function createStar() {
+    var star = document.createElement('div');
+    star.className = 'star'; // 给星星添加样式类
+    star.style.position = 'absolute'; // 设置定位
+    star.style.opacity = 1; // 初始不透明度
+    document.body.appendChild(star);
+    return star;
+}
+
+// 添加事件监听器
+document.addEventListener('mousemove', scatterStars);
+
