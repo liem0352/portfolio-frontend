@@ -754,12 +754,10 @@ img {
 }
 /* 鼠标火花：使用主色变量适配主题 */
 .star {
-    width: 5px;
-    height: 5px;
     background-color: var(--mainColor); /* 跟随主题主色 */
-    border-radius: 50%; /* 圆形 */
     position: absolute; /* 绝对定位 */
     pointer-events: none; /* 不影响鼠标事件 */
+    box-shadow: 0 0 4px rgba(var(--mainColor-rgb), 0.4); /* 柔和发光 */
 }
 
 
