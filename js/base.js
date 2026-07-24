@@ -134,9 +134,15 @@ function closeMagnifier() {
 }
 })();
 
-// 控制星星洒落的函数
+// 控制星星洒落的函数：每次鼠标移动生成少量柔和光点
 function scatterStars(event) {
-    for (var i = 0; i < 5; i++) { // 每次鼠标移动洒下5颗星星，可调整数量
+    // 降低生成频率：每 3 帧最多生成一次，避免过密
+    scatterStars._frame = (scatterStars._frame || 0) + 1;
+    if (scatterStars._frame % 3 !== 0) return;
+
+    // 每次只生成 1-2 颗，更自然
+    var count = Math.random() > 0.5 ? 2 : 1;
+    for (var i = 0; i < count; i++) {
         var star = createStar();
         star.style.left = event.pageX + 'px';
         star.style.top = event.pageY + 'px';
@@ -144,14 +150,16 @@ function scatterStars(event) {
     }
 }
 
-// 控制单个星星动画的函数
+// 控制单个星星动画的函数：更柔和的飘落轨迹
 function moveStar(star) {
-    var speedX = (Math.random() - 0.5) * 5; // 水平速度有正有负
-    var speedY = 1 + Math.random() * 3; // 垂直速度向下
+    var speedX = (Math.random() - 0.5) * 3; // 水平漂移更轻微
+    var speedY = 0.5 + Math.random() * 1.5; // 垂直下落更慢
+    var decay = 0.015 + Math.random() * 0.015; // 随机淡出速度
+
     function animate() {
         star.style.left = parseFloat(star.style.left) + speedX + 'px';
         star.style.top = parseFloat(star.style.top) + speedY + 'px';
-        star.style.opacity -= 0.02; // 逐渐消失
+        star.style.opacity = parseFloat(star.style.opacity) - decay;
         if (star.style.opacity <= 0) {
             star.remove();
         } else {
@@ -161,12 +169,20 @@ function moveStar(star) {
     animate();
 }
 
-// 创建星星的函数
+// 创建星星的函数：随机大小、透明度、圆角，营造柔和光点
 function createStar() {
     var star = document.createElement('div');
+    var size = 2 + Math.random() * 3; // 2-5px 随机大小
+    var opacity = 0.4 + Math.random() * 0.5; // 0.4-0.9 随机透明度
+    var hueShift = (Math.random() - 0.5) * 20; // 轻微色相偏移
+
     star.className = 'star'; // 给星星添加样式类
     star.style.position = 'absolute'; // 设置定位
-    star.style.opacity = 1; // 初始不透明度
+    star.style.width = size + 'px';
+    star.style.height = size + 'px';
+    star.style.borderRadius = '50%';
+    star.style.opacity = opacity; // 初始不透明度
+    star.style.filter = 'blur(' + (Math.random() > 0.6 ? '1px' : '0px') + ')';
     document.body.appendChild(star);
     return star;
 }
