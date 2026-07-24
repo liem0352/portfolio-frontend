@@ -1,5 +1,5 @@
 // 导入paper库
-paper.install(window);
+  paper.install(window);
 
 // 定义常量SQRT_3
 var SQRT_3 = Math.pow(3, 0.5);
@@ -7,6 +7,29 @@ var SQRT_3 = Math.pow(3, 0.5);
 var triangle, D, mousePos, position;
 var count = 20; // 降低星星数量
 var petalsCount = 10; // 创建10个半径为10的花瓣
+var starsSymbol = null; // 星星符号缓存
+var petalsList = []; // 花瓣列表缓存
+
+/**
+ * 读取 CSS 变量获取主色，并解析为 paper.Color
+ * 主题切换时星星和花瓣颜色会动态跟随
+ */
+var getThemeMainColor = function () {
+  var hex = getComputedStyle(document.documentElement)
+    .getPropertyValue('--mainColor')
+    .trim();
+  // 兜底：默认琥珀金
+  if (!hex) hex = '#e8b339';
+  // 解析 #rrggbb → paper.Color
+  var r = parseInt(hex.slice(1, 3), 16) / 255;
+  var g = parseInt(hex.slice(3, 5), 16) / 255;
+  var b = parseInt(hex.slice(5, 7), 16) / 255;
+  return {
+    fill: new paper.Color(r, g, b, 0.8),
+    stroke: new paper.Color(r, g, b, 0.5),
+    petalFill: new paper.Color(r, g, b, 0.4),
+  };
+};
 
 // 页面加载完成后执行的函数
 window.onload = function () {
@@ -126,21 +149,24 @@ window.onmousemove = function (event) {
 
 // 创建星星的函数
 var buildStars = function () {
-  // 创建一个圆形作为星星的符号
+  // 读取主题主色动态生成星星颜色
+  var themeColor = getThemeMainColor();
+
+  // 创建一个圆形作为星星的符号（使用主题色）
   var path = new Path.Circle({
     center: [0, 0],
     radius: 3,
-    fillColor: 'white',
-    strokeColor: 'white',
+    fillColor: themeColor.fill,
+    strokeColor: themeColor.stroke,
   });
 
   // 创建符号
-  var symbol = new Symbol(path);
+  starsSymbol = new Symbol(path);
 
   // 创建多个星星的实例
   for (var i = 0; i < count; i++) {
     var center = Point.random().multiply(paper.view.size);
-    var placed = symbol.place(center);
+    var placed = starsSymbol.place(center);
     placed.scale(i / count + 0.01);
     placed.data = {
       vector: new Point({
@@ -191,10 +217,13 @@ var moveStars = function (vector) {
 var Petal = function (radius) {
   this.group = new Group();
 
+  // 读取主题主色生成花瓣填充，使花瓣颜色随主题切换
+  var themeColor = getThemeMainColor();
+
   var petalPath = new Path.Ellipse({
     center: [0, 0],
     radius: [radius, radius / 3],
-    fillColor: 'pink',
+    fillColor: themeColor.petalFill,
   });
 
   this.group.addChild(petalPath);
@@ -211,6 +240,37 @@ Petal.prototype.update = function () {
   this.group.position = this.group.position.add(this.vector);
   keepInView(this.group);
 };
+
+/**
+ * 主题切换时重建 canvas 元素
+ * 监听 base.js 派发的 'theme:changed' 事件，清空当前 project 后重新构建星星 / 三角形 / 花瓣，
+ * 使其颜色读取最新的 CSS 变量值（--mainColor）
+ */
+document.addEventListener('theme:changed', function () {
+  // paper 尚未初始化时跳过（避免页面刚加载就触发报错）
+  if (!paper.project) return;
+
+  // 清空当前项目所有内容（包含背景矩形 / 星星 / 三角形 / 花瓣）
+  project.clear();
+
+  // 重新绘制背景矩形
+  var background = new Path.Rectangle(view.bounds);
+
+  // 重建星星（getThemeMainColor 会读取最新的 --mainColor）
+  buildStars();
+
+  // 重建三角形
+  triangle.build(50);
+
+  // 重建花瓣
+  for (var i = 0; i < petalsCount; i++) {
+    /* jshint unused:false */
+    new Petal(10);
+  }
+
+  // 刷新视图显示新颜色
+  paper.view.draw();
+});
 
 
 

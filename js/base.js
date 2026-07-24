@@ -20,78 +20,47 @@
     }
   }
 
-  // 初始化活动状态的函数
+  // 初始化活动状态（主题）的函数
+  // 简化：仅设置 data-theme 属性，所有颜色变量由 base.css 中的 :root[data-theme="..."] 块统一管理
   function initActive () {
-    let root = document.querySelector(':root'); // 获取根元素
-    var active = sessionStorage.getItem('wttandroid'); // 从sessionStorage中获取活动状态
-    
-    // 判断用户是否为非第一次登录且状态为开启灯（白色）
-    if (active && active == 'true') {
-      $('#myRadio').removeClass('active'); // 移除myRadio的active类
-      $('.navigation').removeClass('active'); // 移除navigation的active类
+    let root = document.documentElement; // 根元素
+    var active = sessionStorage.getItem('wttandroid'); // 读取已保存的主题状态
 
-      // 设置CSS变量为白色主题
-      root.style.setProperty('--backColor', '#fff');
-      root.style.setProperty('--borderline', '#fff');
-      root.style.setProperty('--headerCOlor', '#fff');
-      root.style.setProperty('--headerhover', 'rgb(255, 255, 255,.8)');
-      root.style.setProperty('--headerFont', '#00283A' );
-      root.style.setProperty('--fontColor', '#fff' );
-      root.style.setProperty('--mainColor', '#ff8181' );
-      root.style.setProperty('--bagColor', '#f4f5f7');
-    } else { // 第一次登录或是黑色主题时，设置为黑色主题
-      $('#myRadio').addClass('active'); // 添加myRadio的active类
-      $('.navigation').addClass('active'); // 添加navigation的active类
-      
-      // 设置CSS变量为黑色主题
-      root.style.setProperty('--backColor', '#fff');
-      root.style.setProperty('--borderline', '#00283A');
-      root.style.setProperty('--headerCOlor', '#00283A');
-      root.style.setProperty('--headerhover', 'rgb(0, 40, 58,.8)');
-      root.style.setProperty('--headerFont', '#fff' );
-      root.style.setProperty('--fontColor', '#00283A' );
-      root.style.setProperty('--mainColor', '#ff8181' );
-      root.style.setProperty('--bagColor','#02162b');
+    // active === 'true' 表示浅色主题；其他（null / 'false'）走深色默认
+    if (active && active == 'true') {
+      $('#myRadio').removeClass('active');
+      $('.navigation').removeClass('active');
+      root.setAttribute('data-theme', 'light');
+    } else {
+      $('#myRadio').addClass('active');
+      $('.navigation').addClass('active');
+      root.setAttribute('data-theme', 'dark');
     }
   }
 
-  // 绑定myRadio点击事件
+  // 绑定主题切换按钮（myRadio）点击事件
+  // 简化逻辑：只切换 data-theme，并派发自定义事件 'theme:changed' 供 canvas 等监听
   $('#myRadio').click(function () {
-    let root = document.querySelector(':root'); // 获取根元素
+    let root = document.documentElement;
 
-    // 判断myRadio是否有active类
-    if ($('#myRadio').hasClass('active')) { // 如果是黑色，将其更改为白色
-      sessionStorage.setItem('wttandroid', true); // 保存状态为true
-      
-      $('#myRadio').removeClass('active'); // 移除active类
-      $('.navigation').removeClass('active'); // 移除导航的active类
-
-      // 设置CSS变量为白色主题
-      root.style.setProperty('--backColor', '#fff');
-      root.style.setProperty('--borderline', '#fff');
-      root.style.setProperty('--headerCOlor', '#fff');
-      root.style.setProperty('--headerhover', 'rgb(255, 255, 255,.8)');
-      root.style.setProperty('--headerFont', '#00283A' );
-      root.style.setProperty('--fontColor', '#fff' );
-      root.style.setProperty('--mainColor', '#ff8181' );
-      root.style.setProperty('--bagColor', '#f4f5f7');
-
-    } else { // 如果是白色，将其更改为黑色
-      sessionStorage.setItem('wttandroid', false); // 保存状态为false
-      
-      $('#myRadio').addClass('active'); // 添加active类
-      $('.navigation').addClass('active'); // 添加导航的active类
-      
-      // 设置CSS变量为黑色主题
-      root.style.setProperty('--backColor', '#fff');
-      root.style.setProperty('--borderline', '#00283A');
-      root.style.setProperty('--headerCOlor', '#00283A');
-      root.style.setProperty('--headerhover', 'rgb(0, 40, 58,.8)');
-      root.style.setProperty('--headerFont', '#fff' );
-      root.style.setProperty('--fontColor', '#00283A' );
-      root.style.setProperty('--mainColor', '#ff8181' );
-      root.style.setProperty('--bagColor','#02162b');
+    // 当前是深色（有 active 类） → 切换为浅色
+    if ($('#myRadio').hasClass('active')) {
+      sessionStorage.setItem('wttandroid', true); // 持久化
+      $('#myRadio').removeClass('active');
+      $('.navigation').removeClass('active');
+      root.setAttribute('data-theme', 'light');
+    } else {
+      // 当前是浅色 → 切换为深色
+      sessionStorage.setItem('wttandroid', false);
+      $('#myRadio').addClass('active');
+      $('.navigation').addClass('active');
+      root.setAttribute('data-theme', 'dark');
     }
+
+    // 派发自定义事件：canvas.js 监听后会重建星星 / 花瓣，使其颜色跟随主题
+    document.dispatchEvent(new CustomEvent('theme:changed', {
+      detail: { theme: root.getAttribute('data-theme') }
+    }));
   })
 
   // 绑定遮罩层关闭事件

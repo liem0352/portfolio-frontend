@@ -8,9 +8,20 @@
   overflow: hidden;
   flex: 0 0 30%;
   position: relative;
-  /* min-height: 300px; */
-  margin-bottom: 40px;
+  margin-bottom: var(--space-2xl);
   height: 180px;
+  background-color: var(--headerCOlor);
+  border-radius: var(--card-radius);
+  border: var(--card-border);
+  box-shadow: var(--card-shadow);
+  transition: border-color .3s ease, box-shadow .3s ease, transform .3s ease;
+}
+
+/* 生活照片卡悬停态 */
+.li2-box-item:hover {
+  border: var(--card-border-hover);
+  box-shadow: var(--card-shadow-hover);
+  transform: translateY(-3px);
 }
 .li2-box-item:hover img{
   transform: scale(1);
@@ -55,9 +66,19 @@
   background-color: var(--headerCOlor);
   min-height: 150px;
   text-align: center;
-  border-radius: 10px;
-  padding: 30px 20px;
+  border-radius: var(--card-radius);
+  border: var(--card-border);
+  box-shadow: var(--card-shadow);
+  padding: var(--space-xl) var(--space-lg);
   box-sizing: border-box;
+  transition: border-color .3s ease, box-shadow .3s ease, transform .3s ease;
+}
+
+/* 生活页统计卡悬停态 */
+.content-li.li1>.li1-box:hover {
+  border: var(--card-border-hover);
+  box-shadow: var(--card-shadow-hover);
+  transform: translateY(-2px);
 }
 
 .li1-box>span {
@@ -93,7 +114,7 @@
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(0, 0, 0, 0.8);
+  background-color: var(--modal-bg); /* 跟随主题的模态背景 */
   display: flex;
   justify-content: center;
   align-items: center;
@@ -108,7 +129,7 @@
   position: absolute;
   top: 20px;
   right: 30px;
-  color: white;
+  color: var(--modal-fg); /* 跟随主题的模态前景文字 */
   font-size: 30px;
   cursor: pointer;
 }

@@ -6,8 +6,20 @@
 .li1-box-item{
   position: relative;
   flex: 0 0 45%;
-  padding: 25px;
+  padding: var(--space-lg);
   box-sizing: border-box;
+  background-color: var(--headerCOlor);
+  border-radius: var(--card-radius);
+  border: var(--card-border);
+  box-shadow: var(--card-shadow);
+  transition: border-color .3s ease, box-shadow .3s ease, transform .3s ease;
+}
+
+/* 联系方式卡悬停态 */
+.li1-box-item:hover {
+  border: var(--card-border-hover);
+  box-shadow: var(--card-shadow-hover);
+  transform: translateY(-2px);
 }
 
 
@@ -16,33 +28,49 @@
   height: 50px;
 }
 .li2-box{
-  padding: 50px;
+  padding: var(--space-2xl);
 }
 
+/* 表单输入框：跟随主题（深色：墨黑半透明，浅色：浅灰半透明） */
 .li2-box>input,.li2-box>textarea{
   display: block;
   width: 100%;
   height: 30px;
   line-height: 30px;
-  margin-bottom: 20px;
-  border: none;
-  background-color: #F4F5F7;
-  border-radius: 10px;
-  padding: 0 20px;
+  margin-bottom: var(--space-md);
+  border: var(--card-border);
+  background-color: var(--textblock-bg);
+  border-radius: 8px;
+  padding: 0 var(--space-md);
+  color: var(--headerFont);
   box-shadow: inset 0 0 4px -1px rgb(0 0 0 / 15%);
   box-sizing: border-box;
-  /* color: var(--headerFont); */
+  transition: border-color .3s ease;
+}
+
+/* 输入框聚焦态：边框变琥珀金 */
+.li2-box>input:focus,.li2-box>textarea:focus{
+  outline: none;
+  border-color: var(--mainColor);
 }
 .li2-box>textarea{
   height: 200px;
   resize: none;
 }
 .li2-box>button{
-  padding: 10px 30px;
+  padding: var(--space-sm) var(--space-xl);
   border: none;
   border-radius: 20px;
   background-color: var(--mainColor);
   color: var(--headerFont);
+  cursor: pointer;
+  transition: transform .2s ease, box-shadow .2s ease;
+}
+
+/* 按钮悬停态：轻微放大 + 阴影 */
+.li2-box>button:hover{
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(var(--mainColor-rgb), 0.3); /* 主色阴影，跟随主题切换 */
 }
 
 .content-li svg path{

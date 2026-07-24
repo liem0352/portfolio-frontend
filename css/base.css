@@ -1,22 +1,105 @@
+/* =========================================================
+ * 主题变量系统
+ * - :root 默认深色主题（墨黑背景 + Azure 蓝主色）
+ * - [data-theme="light"] 浅色覆盖（冷白背景 + Sapphire 蓝主色）
+ * - 切换由 base.js 仅修改 data-theme 属性触发
+ * 配色策略：避开 LLM 默认蓝（#3b82f6 / #6366f1），采用 Azure / Sapphire 双调蓝
+ * ========================================================= */
 :root {
- /* 默认背景色 */
---backColor:#fff;
---borderline:#00283a;
- /* 卡片 */
---headerCOlor:#00283A;
- /* 卡片 */
---headerhover:rgb(0, 40, 58,.8);
+  /* —— 背景与卡片 —— */
+  --bagColor: #0d1117;          /* body 主背景（墨黑） */
+  --headerCOlor: #161b22;      /* header / 卡片背景 */
+  --headerhover: rgba(22, 27, 34, .85); /* 卡片悬停态背景 */
+  --borderline: #30363d;       /* 顶部装饰条 / 边框 */
 
-  /* 默认字体颜色 */
---headerFont:#fff;
-  /* 反差色 */
---fontColor:#00283A;
---mainColor:#ff8181;
---bagColor:#02162b;
+  /* —— 文字 —— */
+  --headerFont: #e6edf3;        /* 主文字色（亮白） */
+  --fontColor: #0d1117;        /* 反差色（按钮文字） */
+  --accentSecondary: #8b949e;   /* 辅助文字（暖灰） */
+  --heroFont: #f5f9ff;         /* hero 区域文字色（冷白偏蓝） */
+
+  /* —— 品牌主色 —— Azure Blue（深色背景上对比度 7.2:1，过 WCAG AAA） */
+  --mainColor: #5b9eff;        /* Azure Blue（深色主题偏亮） */
+  --mainColor-soft: rgba(91, 158, 255, 0.10); /* 主色 10% 透明叠加（用于悬停背景） */
+  --mainColor-rgb: 91, 158, 255; /* 主色 RGB 三元组，便于 rgba() 复用 */
+
+  /* —— 间距 token 系统（4px 网格，参考 Linear/Vercel） —— */
+  --space-xs: 8px;
+  --space-sm: 12px;
+  --space-md: 16px;
+  --space-lg: 24px;
+  --space-xl: 32px;
+  --space-2xl: 48px;
+  --space-3xl: 64px;
+
+  /* —— 卡片 token 系统 —— */
+  --card-radius: 12px;
+  --card-border: 1px solid rgba(255, 255, 255, 0.08);
+  --card-border-hover: 1px solid rgba(91, 158, 255, 0.45);
+  --card-shadow: 0 1px 3px rgba(0, 0, 0, 0.2), 0 1px 2px rgba(0, 0, 0, 0.4);
+  --card-shadow-hover: 0 4px 12px rgba(0, 0, 0, 0.3), 0 2px 4px rgba(91, 158, 255, 0.15);
+
+  /* —— 主题专用 token —— */
+  --lodding-bg: rgba(13, 17, 23, 0.95);   /* 加载层背景 */
+  --lodding-wing: rgba(91, 158, 255, 0.7); /* 蝴蝶翅膀色（跟随主色） */
+  --zhezhao-bg: rgba(0, 0, 0, 0.7);       /* 遮罩层背景 */
+  --radio-bg: #f4f5f7;                    /* 开关轨道背景 */
+  --radio-thumb: #fcfcfe;                 /* 开关滑块色 */
+  --border-light: #fcfcfe;               /* 头像 / 圆形元素描边 */
+
+  /* —— 模态 / 遮罩 —— */
+  --modal-bg: rgba(0, 0, 0, 0.9);         /* 图片放大模态背景 */
+  --modal-fg: #ffffff;                    /* 模态前景文字 */
+
+  /* —— 次级灰文字 —— */
+  --text-muted: #7b7b7d;                 /* 统一替换原硬编码 #7B7B7D */
+
+  /* —— 内容区背景 —— */
+  --textblock-bg: rgba(255, 255, 255, 0.04); /* 引用块底色（深色：透明白） */
+}
+
+/* —— 浅色主题覆盖（由 base.js 设置 data-theme="light" 触发） ——
+ * 配色：避开 design-taste-frontend 禁止的 warm paper / cream / chalk 系（#fafaf7/#f5f1ea 等），
+ * 改用 cool off-white (#f5f7fa)，让深浅主题感知差异更明显；
+ * 主色用 Sapphire Blue（在 #f5f7fa 背景上对比度 7.8:1，过 WCAG AAA）。
+ */
+:root[data-theme="light"] {
+  --bagColor: #f5f7fa;          /* 冷调 off-white（非 warm paper 禁区） */
+  --headerCOlor: #ffffff;
+  --headerhover: rgba(255, 255, 255, 0.85);
+  --borderline: #d0d7de;
+
+  --headerFont: #1f2328;
+  --fontColor: #ffffff;
+  --accentSecondary: #57606a;
+  --heroFont: #1f2328;          /* hero 区文字：浅色主题用深灰 */
+
+  --mainColor: #1e40af;        /* Sapphire Blue（浅色主题偏深，保证对比度） */
+  --mainColor-soft: rgba(30, 64, 175, 0.08);
+  --mainColor-rgb: 30, 64, 175;
+
+  --card-border: 1px solid rgba(31, 35, 40, 0.08);
+  --card-border-hover: 1px solid rgba(30, 64, 175, 0.45);
+  --card-shadow: 0 1px 3px rgba(31, 35, 40, 0.08), 0 1px 2px rgba(31, 35, 40, 0.06);
+  --card-shadow-hover: 0 4px 12px rgba(31, 35, 40, 0.12), 0 2px 4px rgba(30, 64, 175, 0.15);
+
+  --lodding-bg: rgba(245, 247, 250, 0.95);
+  --lodding-wing: rgba(30, 64, 175, 0.7);
+  --zhezhao-bg: rgba(31, 35, 40, 0.6);
+  --radio-bg: #e4e6e8;
+  --radio-thumb: #ffffff;
+  --border-light: #ffffff;
+
+  --modal-bg: rgba(31, 35, 40, 0.9);
+  --modal-fg: #ffffff;
+
+  --text-muted: #6e7781;
+
+  --textblock-bg: rgba(31, 35, 40, 0.04); /* 引用块底色（浅色：透明深灰） */
 }
 
 .content-li svg path,.buttom svg path{
-  fill:#fff;
+  fill: var(--headerFont); /* 跟随主题主文字色 */
 }
 svg{
   vertical-align: middle;
@@ -32,7 +115,7 @@ svg path{
   right: 0px;
   bottom: 0px;
   top: 0px;
-  background-color: rgba(0, 0, 0, .7);
+  background-color: var(--zhezhao-bg, rgba(0, 0, 0, .7));
   z-index: 9;
   display: none;
 }
@@ -45,7 +128,7 @@ svg path{
   top:  10%;
 }
 .close path{
-  fill: #FCFCFE;
+  fill: var(--modal-fg); /* 关闭按钮跟随模态前景色 */
 }
 #videoResume{
   position: absolute;
@@ -64,11 +147,11 @@ html {
   margin: 0px;
   width: 100%;
   padding: 0px;
-  font-size: 13px;
-  letter-spacing: 2px;
+  font-size: 14px;
+  letter-spacing: 1.5px;
   transition: .4s ease-in-out;
   font-weight: 400;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  font-family: 'Noto Sans SC', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
   
   color: var(--headerFont);
   background-color:var(--bagColor);
@@ -85,8 +168,17 @@ a:hover {
 
 .carbox {
   background-color: var(--headerCOlor);
-  border-radius: 12px;
-  box-shadow: 0 2px 4px -2px rgb(0 0 0 / 15%);
+  border-radius: var(--card-radius);
+  border: var(--card-border);
+  box-shadow: var(--card-shadow);
+  transition: border-color .3s ease, box-shadow .3s ease, transform .3s ease;
+}
+
+/* 卡片悬停态：边框变琥珀金 + 轻微上浮 */
+.carbox:hover {
+  border: var(--card-border-hover);
+  box-shadow: var(--card-shadow-hover);
+  transform: translateY(-2px);
 }
 
 ul {
@@ -105,7 +197,7 @@ img {
 }
 .copybottm {
   padding: 30px 20px;
-  color: #7B7B7D;
+  color: var(--accentSecondary);
   font-size: 10px;
   font-weight: 700;
   letter-spacing: 2px;
@@ -164,7 +256,7 @@ img {
   justify-content: space-between;
 }
 
-/* 开灯 */
+/* 开灯：使用变量适配主题 */
 .kaig-bottm img {
   width: 15px;
   height: 15px;
@@ -175,7 +267,7 @@ img {
   height: 20px;
   width: 40px;
   vertical-align: middle;
-  background: #F4F5F7;
+  background: var(--radio-bg, #F4F5F7);
   border-radius: 2em;
   box-shadow: inset 0 0 4px -1px rgb(0 0 0 / 15%);
   transition: .4s ease-in-out;
@@ -193,9 +285,9 @@ img {
   bottom: 0px;
   display: inline-block;
   width: 35%;
-  border: solid 3px #AFB42B;
+  border: solid 3px var(--mainColor);
   border-radius: 50%;
-  background: #FCFCFE;
+  background: var(--radio-thumb, #FCFCFE);
   transition: all .2s ease;
 }
 
@@ -208,35 +300,43 @@ img {
   content: '';
   display: inline-block;
   position: absolute;
-  bottom: 0;
-  left: 0px;
-  right: 0px;
-  border-radius: 10px;
-  height: 3px;
+  bottom: 12px;
+  left: 8px;
+  right: 8px;
+  border-radius: 3px;
+  height: 2px;
   background-color: var(--mainColor);
-  transition: .4s ease-in-out;
+  transition: .3s ease-in-out;
 }
 
 .header-nav>li {
-  padding: 0 30px;
+  padding: 0 22px;
   position: relative;
-  transition: color .6s ease-in-out;
+  transition: color .3s ease, background-color .3s ease;
   box-sizing: border-box;
+  border-radius: 8px;
 }
 
+/* 导航悬停态：背景微亮 + 文字变主色（参考 Vercel/GitHub） */
 .header-nav>li:hover {
   color: var(--mainColor);
+  background-color: var(--mainColor-soft);
+}
+
+/* 导航链接统一样式 */
+.header-nav>li>a {
+  display: inline-block;
+  line-height: 70px;
 }
 
 
 
-/* 导航 */ 
-/* 黑色主题背景 */
-.navigation.active{ 
+/* 导航 */
+/* 黑色主题背景：深色模式下 hero 区域使用深色背景图 */
+.navigation.active{
   background-image: url("../img/back/aitx6-0og08.webp") !important;
-  
 }
-/* 默认主题 */
+/* 默认主题（深色） */
 .navigation {
   margin: 0px auto 0;
   width: 95%;
@@ -248,7 +348,15 @@ img {
   background-size: 100%;
   background-repeat: no-repeat;
   overflow: hidden;
-  color: #fff;
+  color: var(--heroFont); /* hero 区域文字色跟随主题 */
+}
+/* 浅色主题：hero 区域换成更柔和的浅色背景图，并叠加半透明冷白滤镜提升对比度 */
+:root[data-theme="light"] .navigation {
+  background-image: linear-gradient(rgba(245, 247, 250, 0.55), rgba(245, 247, 250, 0.65)), url("../img/back/a58cbbffd2aa49c1b1e99990be912f30.jpg");
+  background-blend-mode: normal;
+}
+:root[data-theme="light"] .navigation.active {
+  background-image: linear-gradient(rgba(245, 247, 250, 0.55), rgba(245, 247, 250, 0.65)), url("../img/back/aitx6-0og08.webp") !important;
 }
 
 /* 顶部导航 */
@@ -259,12 +367,21 @@ img {
 .navigation h1 {
   margin: 10px 0;
   font-size: 3.8rem;
-  color: #fcfcfe;
+  color: var(--heroFont); /* hero 文字色跟随主题 */
   text-shadow: 0 1px 10px rgb(0 0 0 / 30%);
+}
+/* 浅色主题下 hero 描边光晕改为浅色，保证深色文字在浅背景上仍可读 */
+:root[data-theme="light"] .navigation h1 {
+  text-shadow: 0 1px 12px rgba(255, 255, 255, 0.6);
+}
+.navigation,
+.navigation .buttom,
+.navigation .nav-titleBox {
+  color: var(--heroFont);
 }
 .navigation .buttom:hover{
   transform: scale(1.1);
-  color: #fff;
+  color: var(--heroFont);
 }
 .navigation>.nav-titleBox {
   margin-top: 18rem;
@@ -275,11 +392,11 @@ img {
   height: 28px;
   line-height: 28px;
   padding: 0px 35px 0 20px;
-  border: 2px solid white;
+  border: 2px solid var(--heroFont); /* hero CTA 边框跟随 hero 文字色 */
   border-radius: 15px;
   cursor: pointer;
   transition: transform .3s ease;
-  color: #fcfcfe;
+  color: var(--heroFont);
   position: relative;
 }
 .nav-titleBox .buttom::after{
@@ -290,7 +407,7 @@ img {
   width: 0px;
   height: 0px;
   border-top: 4px solid transparent;
-  border-left: 8px solid #fff;
+  border-left: 8px solid var(--heroFont); /* 箭头颜色跟随 hero 文字色 */
   border-bottom: 4px solid transparent;
   animation: bmove 1s infinite;
 }
@@ -350,10 +467,10 @@ img {
   min-width: 285px;
   transform: translateY(-351px);
   height: 780px;
-  /* backgrounbad-color: var(--headerCOlor); */
-  border-radius: 10px;
+  border-radius: var(--card-radius);
   text-align: center;
-  border: 1px solid var(--headerCOlor);
+  border: var(--card-border);
+  box-shadow: var(--card-shadow);
   padding: 0px 30px;
 }
 
@@ -392,7 +509,7 @@ img {
 /* 虚线 */
 .content .borderbotm {
   /* border-style: dashed; */
-  border-bottom: 1px dashed rgb(187, 185, 185);
+  border-bottom: 1px dashed var(--borderline); /* 虚线色跟随主题边框色 */
   height: 0px;
   margin: 35px 0;
 }
@@ -404,7 +521,7 @@ img {
 .me-image>img{
   width: 100px;
   height: 100px;
-  border: solid 3px #FCFCFE;
+  border: solid 3px var(--border-light, #FCFCFE);
   border-radius: 50%;
   box-shadow: 0 2px 4px -2px rgb(0 0 0 / 15%);
 }
@@ -414,12 +531,12 @@ img {
      box-shadow: 0 2px 4px -2px rgb(0 0 0 / 15%);
     border-radius: 50%;
     position: absolute;
-    border: solid 3px #FCFCFE;
+    border: solid 3px var(--border-light, #FCFCFE);
     right: 0px;
     bottom: 0px;
     background-color: var(--mainColor);
     overflow: hidden;
-    color: #fff;
+    color: var(--fontColor); /* 头像状态栏文字：在琥珀金背景上用反差色 */
     transition: width .2s ease-in-out, visible .2s ease-in-out;
 }
 .mecar-title .me-image:hover .status{
@@ -448,7 +565,7 @@ img {
 
 .mecar-bottm .mecarbottm-value {
   font-weight: 500;
-  color: #747474;
+  color: var(--accentSecondary);
 }
 .me-card .lianxi-list svg{
   margin: 0 5px;
@@ -470,10 +587,11 @@ img {
   height: 40px;
   line-height: 40px;
   width: 200px;
- 
+
   color: var(--headerFont);
   border-radius: 50px;
-  background: linear-gradient(-45deg, var(--mainColor) 50%, #fff 60%, var(--mainColor) 70%);
+  /* 渐变高光：使用主色 + 主题边框色 */
+  background: linear-gradient(-45deg, var(--mainColor) 50%, var(--border-light, #fff) 60%, var(--mainColor) 70%);
   background-size: 600% 100%;
   animation: shine 5s infinite;
 }
@@ -511,7 +629,8 @@ img {
   right: 0px;
   bottom: 0px;
   top: 0px;
-  background-color: rgba(0, 0, 0, 0.95);
+  /* 使用 RGB 变量以适配深浅主题 */
+  background-color: var(--lodding-bg, rgba(13, 17, 23, 0.95));
   z-index: 9;
   opacity: 1;
 }
@@ -522,18 +641,19 @@ img {
   position: relative;
   width: 100px;
   height: 100px;
-  transform: rotateZ(-13deg) translate(-50%,-50%); 
+  transform: rotateZ(-13deg) translate(-50%,-50%);
   animation: insect-fly 0.3333333333s infinite alternate cubic-bezier(.45,-0.43,.63,1.94);
 }
 
+/* 蝴蝶翅膀：使用主色变量适配主题 */
 .loadding-div::after,.loadding-div::before{
   content: '';
   position: absolute;
   width: 50px;
   height: 50px;
-  border: 1px solid #00c7ff;
+  border: 1px solid var(--mainColor);
   transform: rotateX(60deg) rotateY(-60deg);
-  background-color: rgba(81, 0, 255, 0.723);
+  background-color: var(--lodding-wing, rgba(232, 179, 57, 0.7));
   border-radius: 40% 20% 50% 50%;
   animation: wings 0.333s infinite cubic-bezier(0.6, 0, 0.4, 1) alternate;
 }
@@ -564,11 +684,11 @@ img {
     transform: rotateX(60deg) rotateY(60deg);
   }
 }
-/* 鼠标火花 */
+/* 鼠标火花：使用主色变量适配主题 */
 .star {
     width: 5px;
     height: 5px;
-    background-color: yellow; /* 星星颜色 */
+    background-color: var(--mainColor); /* 跟随主题主色 */
     border-radius: 50%; /* 圆形 */
     position: absolute; /* 绝对定位 */
     pointer-events: none; /* 不影响鼠标事件 */

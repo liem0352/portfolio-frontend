@@ -9,12 +9,23 @@
   flex: 0 0 48%;
   position: relative;
   min-height: 250px;
-  /* background-color: antiquewhite; */
-  margin-bottom: 40px;
+  margin-bottom: var(--space-2xl);
+  background-color: var(--headerCOlor);
+  border-radius: var(--card-radius);
+  border: var(--card-border);
+  box-shadow: var(--card-shadow);
+  transition: border-color .3s ease, box-shadow .3s ease, transform .3s ease;
+}
+
+/* 简历技能卡悬停态 */
+.li1-box-item:hover {
+  border: var(--card-border-hover);
+  box-shadow: var(--card-shadow-hover);
+  transform: translateY(-2px);
 }
 
 .boxitem-line{
-  padding: 30px 40px;
+  padding: var(--space-xl) var(--space-2xl);
 }
 .boxitem-line h6{
 }
@@ -92,12 +103,21 @@ h6{
 
 .li3-box .carcontent{
   min-height: 150px;
-  margin: 0 20px 20px;
-  padding: 30px;
+  margin: 0 var(--space-md) var(--space-md);
+  padding: var(--space-xl);
   box-sizing: content-box;
-  /* width: 80%; */
-  /* background-color: aqua; */
-} 
+  background-color: var(--headerCOlor);
+  border-radius: var(--card-radius);
+  border: var(--card-border);
+  box-shadow: var(--card-shadow);
+  transition: border-color .3s ease, box-shadow .3s ease;
+}
+
+/* 经历卡悬停态 */
+.li3-box .carcontent:hover {
+  border: var(--card-border-hover);
+  box-shadow: var(--card-shadow-hover);
+}
 .li3-box .li3box-pro{
   position: relative;
 }

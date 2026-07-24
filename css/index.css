@@ -4,29 +4,26 @@
   justify-content: space-between;
 }
 
-/* .li1-box::after {
-  content: '';
-  position: absolute;
-  top: -8px;
-  left: 8%;
-  right: 8%;
-  height: 10px;
-  background-color: var(--backColor);
-  border-radius: 5px 5px 0% 0%;
-  opacity: .3;
-
-} */
-
 .content-li.li1>.li1-box {
   position: relative;
   flex: 0 0 32%;
   background-color: var(--headerCOlor);
   min-height: 200px;
   text-align: center;
-  border-radius: 10px;
-  padding: 30px 20px;
+  border-radius: var(--card-radius);
+  border: var(--card-border);
+  box-shadow: var(--card-shadow);
+  padding: var(--space-xl) var(--space-lg);
   box-sizing: border-box;
+  transition: border-color .3s ease, box-shadow .3s ease, transform .3s ease;
 
+}
+
+/* 统计卡悬停态：边框变琥珀金 + 轻微上浮 */
+.content-li.li1>.li1-box:hover {
+  border: var(--card-border-hover);
+  box-shadow: var(--card-shadow-hover);
+  transform: translateY(-3px);
 }
 
 .li1-box>span {
@@ -128,7 +125,7 @@
   line-height: 60px;
   border-radius: 50%;
   background-color: var(--mainColor);
-  color: white;
+  color: var(--fontColor); /* 按钮文字反差色，跟随主题切换 */
   text-align: center;
   font-weight: bold;
   font-size: 30px;
@@ -176,20 +173,30 @@
 
 .li4-box>div {
   box-sizing: border-box;
-  padding: 25px;
+  padding: var(--space-lg);
   flex: 0 0 48%;
   min-height: 250px;
-  margin-bottom: 20px;
-
-
+  margin-bottom: var(--space-md);
+  background-color: var(--headerCOlor);
+  border-radius: var(--card-radius);
+  border: var(--card-border);
+  box-shadow: var(--card-shadow);
   font-weight: 500;
   letter-spacing: .05em;
   -webkit-font-smoothing: antialiased;
+  transition: border-color .3s ease, box-shadow .3s ease, transform .3s ease;
+}
+
+/* 技能卡悬停态 */
+.li4-box>div:hover {
+  border: var(--card-border-hover);
+  box-shadow: var(--card-shadow-hover);
+  transform: translateY(-2px);
 }
 
 .li4-box>div p {
   font-size: 13px;
-  color: #7B7B7D;
+  color: var(--text-muted); /* 次级灰文字，跟随主题 */
 }
 
 .li4-box>div a {
@@ -242,7 +249,7 @@ svg {
   font-weight: bold;
   font-size: 20px;
   z-index: 1;
-  color: white;
+  color: var(--headerFont); /* 箭头按钮文字色，跟随主题切换 */
   top: 10%;
   opacity: 0;
 }
@@ -288,7 +295,7 @@ svg {
 .li5box-car>img {
   width: 50px;
   height: 50px;
-  border: solid 3px #FCFCFE;
+  border: solid 3px var(--border-light); /* 头像描边跟随主题 */
   border-radius: 50%;
   box-shadow: 0 2px 4px -2px rgb(0 0 0 / 15%);
 
@@ -315,7 +322,19 @@ svg {
   display: inline-block;
   overflow: hidden;
   flex: 0 0 48%;
-  margin-bottom: 20px;
+  margin-bottom: var(--space-lg);
+  background-color: var(--headerCOlor);
+  border-radius: var(--card-radius);
+  border: var(--card-border);
+  box-shadow: var(--card-shadow);
+  transition: border-color .3s ease, box-shadow .3s ease, transform .3s ease;
+}
+
+/* 文章卡悬停态 */
+.li6-box>div:hover {
+  border: var(--card-border-hover);
+  box-shadow: var(--card-shadow-hover);
+  transform: translateY(-3px);
 }
 
 .li6-box .borderbotm {
@@ -360,7 +379,7 @@ svg {
 .li7boxitem.active::after{
   content: '欢迎聘用';
   text-align: center;
-  color: #fcfcfe;
+  color: var(--fontColor); /* 反差色：在琥珀金背景上显示 */
   font-size: 10px;
   font-weight: 700;
   letter-spacing: 2px;
@@ -406,7 +425,7 @@ svg {
 }
 .item-price sub{
     font-size: 14px;
-    color: rgba(204, 205, 207, 0.7);
+    color: var(--text-muted); /* 次级灰文字 */
     font-weight: 300;
     vertical-align: middle;
 }
