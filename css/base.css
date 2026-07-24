@@ -7,10 +7,21 @@
  * ========================================================= */
 :root {
   /* —— 背景与卡片 —— */
-  --bagColor: #0d1117;          /* body 主背景（墨黑） */
+  --bagColor: #0a0e18;          /* body 主背景（深空蓝黑） */
   --headerCOlor: #161b22;      /* header / 卡片背景 */
   --headerhover: rgba(22, 27, 34, .85); /* 卡片悬停态背景 */
   --borderline: #30363d;       /* 顶部装饰条 / 边框 */
+
+  /* 科技感背景：径向渐变主色光晕 + 细密网格线
+   * 让毛玻璃卡片有参照物，凸显 glass morphism 效果 */
+  --bg-gradient:
+    radial-gradient(ellipse 80% 50% at 50% -20%, rgba(91, 158, 255, 0.15), transparent),
+    radial-gradient(ellipse 60% 40% at 100% 0%, rgba(91, 158, 255, 0.08), transparent),
+    radial-gradient(ellipse 50% 40% at 0% 100%, rgba(91, 158, 255, 0.06), transparent);
+  --bg-grid:
+    linear-gradient(rgba(91, 158, 255, 0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(91, 158, 255, 0.04) 1px, transparent 1px);
+  --bg-grid-size: 40px 40px;
 
   /* —— 文字 —— */
   --headerFont: #e6edf3;        /* 主文字色（亮白） */
@@ -64,7 +75,7 @@
  * 主色用 Sapphire Blue（在 #f5f7fa 背景上对比度 7.8:1，过 WCAG AAA）。
  */
 :root[data-theme="light"] {
-  --bagColor: #f5f7fa;          /* 冷调 off-white（非 warm paper 禁区） */
+  --bagColor: #eef2f8;          /* 冷调浅蓝灰（比纯白更有科技感） */
   --headerCOlor: #ffffff;
   --headerhover: rgba(255, 255, 255, 0.85);
   --borderline: #d0d7de;
@@ -77,6 +88,17 @@
   --mainColor: #1e40af;        /* Sapphire Blue（浅色主题偏深，保证对比度） */
   --mainColor-soft: rgba(30, 64, 175, 0.08);
   --mainColor-rgb: 30, 64, 175;
+
+  /* 浅色科技感背景：冷蓝光晕 + 细网格
+   * 让毛玻璃卡片有更多视觉纹理参照 */
+  --bg-gradient:
+    radial-gradient(ellipse 80% 50% at 50% -20%, rgba(30, 64, 175, 0.10), transparent),
+    radial-gradient(ellipse 60% 40% at 100% 0%, rgba(30, 64, 175, 0.06), transparent),
+    radial-gradient(ellipse 50% 40% at 0% 100%, rgba(30, 64, 175, 0.04), transparent);
+  --bg-grid:
+    linear-gradient(rgba(30, 64, 175, 0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(30, 64, 175, 0.05) 1px, transparent 1px);
+  --bg-grid-size: 40px 40px;
 
   --card-border: 1px solid rgba(31, 35, 40, 0.08);
   --card-border-hover: 1px solid rgba(30, 64, 175, 0.45);
@@ -149,54 +171,15 @@ html {
   padding: 0px;
   font-size: 14px;
   letter-spacing: 1.5px;
-  transition: .4s ease-in-out;
+  transition: background-color .4s ease-in-out, color .4s ease-in-out;
   font-weight: 400;
   font-family: 'Noto Sans SC', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-
+  
   color: var(--headerFont);
   background-color: var(--bagColor);
-}
-
-/* =========================================================
- * 科技风格背景层：网格 + 点阵 + 径向光晕
- * 使用 fixed 伪元素，避免滚动重绘；pointer-events:none 不拦截交互
- * ========================================================= */
-body::before {
-  content: '';
-  position: fixed;
-  inset: 0;
-  z-index: -1;
-  pointer-events: none;
-  /* 网格线 + 点阵：深色主题默认 */
-  background-image:
-    radial-gradient(circle at 1px 1px, rgba(255, 255, 255, 0.10) 1px, transparent 0),
-    linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
-  background-size:
-    40px 40px,
-    80px 80px,
-    80px 80px;
-  /* 中心弱光晕，增加纵深 */
-  background-color: transparent;
-}
-
-/* 浅色主题：背景改用深灰点阵/网格，在 off-white 上形成轻微纹理 */
-:root[data-theme="light"] body::before {
-  background-image:
-    radial-gradient(circle at 1px 1px, rgba(31, 35, 40, 0.14) 1px, transparent 0),
-    linear-gradient(rgba(31, 35, 40, 0.05) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(31, 35, 40, 0.05) 1px, transparent 1px);
-}
-
-/* 顶部径向光晕层：让毛玻璃卡片更有层次 */
-body::after {
-  content: '';
-  position: fixed;
-  inset: 0;
-  z-index: -1;
-  pointer-events: none;
-  background:
-    radial-gradient(ellipse 80% 60% at 50% 0%, rgba(var(--mainColor-rgb), 0.12), transparent 70%);
+  background-image: var(--bg-grid), var(--bg-gradient);
+  background-size: var(--bg-grid-size), 100% 100%;
+  background-attachment: fixed;
 }
 a{
    transition: color .6s ease-in-out;
@@ -517,38 +500,40 @@ img {
 }
 
 /* =========================================================
- * 通用内容区布局
- * - 默认：block 流式布局，适用于生活/联系/简历等单栏页面
- * - .has-sidebar：首页专属双栏布局，卡片贯穿 Hero 背景图
+ * 首页内容区布局（参考原模板：卡片贯穿 Hero 背景图）
+ * - 大屏 (>1200px)：.content 整体上移覆盖 Hero 底部，左侧 me-card 从 Hero 区域内开始，
+ *   背景山脉从卡片边缘露出；右侧内容顺延到 Hero 下方
+ * - 中小屏 (<=1200px)：单列堆叠，卡片回归文档流
  * ========================================================= */
 .content {
   position: relative;
   min-height: 1000px;
   width: 70%;
-  margin: 0 auto;
-  padding: var(--space-3xl) 0;
-  z-index: 1;
-}
-
-/* 首页内容区：双栏布局 */
-.content.has-sidebar {
+  margin: -330px auto 0;
   display: flex;
   gap: var(--space-xl);
-  margin: -330px auto 0;
   padding: 0 0 var(--space-3xl) 0;
+  z-index: 1;
+  /* background-color: rgba(10, 15, 20, 0.2); */
 }
 
 /* 左栏：侧边栏定位容器 */
-.content.has-sidebar .co-left {
+.content .co-left {
   position: relative;
   width: 320px;
   flex: 0 0 320px;
   height: auto;
 }
 
+/* 非首页页面：.content 下没有 co-left/co-right，内容直接放在 #next-one 等容器里
+ * 需要加顶部 padding 抵消 .content 的负 margin，避免压住 Hero */
+.content > :first-child:not(.co-left):not(.co-right) {
+  padding-top: 340px;
+}
+
 /* 个人卡片：大屏下 sticky 跟随滚动，顶部留出 header 高度
  * 使用半透明背景 + 背景模糊，营造“贯穿/浮于背景”的玻璃质感 */
-.content.has-sidebar .me-card {
+.content .me-card {
   position: sticky;
   top: 100px;
   width: 100%;
@@ -568,20 +553,20 @@ img {
 }
 
 /* 浅色主题下卡片玻璃效果：使用白色半透明 */
-:root[data-theme="light"] .content.has-sidebar .me-card {
+:root[data-theme="light"] .content .me-card {
   border: 1px solid rgba(31, 35, 40, 0.10);
   background-color: rgba(255, 255, 255, 0.60);
   box-shadow: 0 8px 32px rgba(31, 35, 40, 0.10);
 }
 
 /* 滚动后不再使用固定定位顶出屏幕，直接用 sticky 即可 */
-.content.has-sidebar .me-card.scroll {
+.content .me-card.scroll {
   position: sticky;
   top: 100px;
 }
 
 /* 右栏：内容流占满剩余空间，从 Hero 底部开始，避免压住文字 */
-.content.has-sidebar .co-right {
+.content .co-right {
   flex: 1;
   min-width: 0;
   width: auto;
@@ -650,7 +635,7 @@ img {
     bottom: 0px;
     background-color: var(--mainColor);
     overflow: hidden;
-    color: var(--fontColor); /* 头像状态栏文字：在琥珀金背景上用反差色 */
+    color: #ffffff; /* 徽章文字强制白色，深浅主题一致 */
     transition: width .2s ease-in-out, visible .2s ease-in-out;
 }
 .mecar-title .me-image:hover .status{
@@ -679,7 +664,7 @@ img {
 
 .mecar-bottm .mecarbottm-value {
   font-weight: 500;
-  color: #ffffff; /* 个人信息值固定白色，在玻璃卡片上保持高对比 */
+  color: var(--accentSecondary);
 }
 .me-card .lianxi-list svg{
   margin: 0 5px;
@@ -702,10 +687,10 @@ img {
   line-height: 40px;
   width: 200px;
 
-  color: #ffffff; /* 按钮文字固定白色，确保在深浅主题下都清晰可读 */
+  color: #ffffff; /* 按钮文字强制白色，深浅主题一致 */
   border-radius: 50px;
-  /* 渐变高光：使用主色 + 白色高光 */
-  background: linear-gradient(-45deg, var(--mainColor) 50%, #ffffff 60%, var(--mainColor) 70%);
+  /* 渐变高光：使用主色 + 主题边框色 */
+  background: linear-gradient(-45deg, var(--mainColor) 50%, var(--border-light, #fff) 60%, var(--mainColor) 70%);
   background-size: 600% 100%;
   animation: shine 5s infinite;
 }
@@ -974,20 +959,18 @@ img {
     visibility: hidden;
   }
   .content{
+    display: block;
     width: 90%;
+    margin: -160px auto 0;
     padding: var(--space-xl) 0;
   }
-  .content.has-sidebar{
-    display: block;
-    margin: -160px auto 0;
-  }
-  .content.has-sidebar .co-left{
+  .content .co-left{
     display: none;
     width: auto;
     flex: none;
     height: auto;
   }
-  .content.has-sidebar .me-card{
+  .content .me-card{
     position: relative;
     top: auto;
     width: auto;
@@ -996,13 +979,18 @@ img {
     height: auto;
     min-height: auto;
   }
-  .content.has-sidebar .me-card.scroll{
+  .content .me-card.scroll{
     position: relative;
     top: auto;
   }
-  .content.has-sidebar .co-right{
+  .content .co-right{
     width: 100%;
     padding-top: 0;
+  }
+
+  /* 中小屏下非首页页面：内容区顶部留白相应减少 */
+  .content > :first-child:not(.co-left):not(.co-right) {
+    padding-top: 180px;
   }
 
   .min_menu{
