@@ -342,7 +342,7 @@ img {
   margin: 0px auto 0;
   width: 95%;
   background-color: transparent;
-  height: 600px;
+  height: 520px;
   border-radius: 20px;
   background-image: url("../img/back/a58cbbffd2aa49c1b1e99990be912f30.jpg");
   background-attachment: fixed;
@@ -410,7 +410,7 @@ img {
   height: 100%;
   width: auto;
   margin: 0;
-  padding-left: 8%;
+  padding-left: 35%;
   box-sizing: border-box;
 }
 
@@ -475,18 +475,20 @@ img {
 }
 
 /* =========================================================
- * 首页内容区布局
- * - 大屏 (>1200px)：左侧 me-card 作为固定侧边栏，右侧为内容流，互不重叠
+ * 首页内容区布局（参考原模板：卡片贯穿 Hero 背景图）
+ * - 大屏 (>1200px)：.content 整体上移覆盖 Hero 底部，左侧 me-card 从 Hero 区域内开始，
+ *   背景山脉从卡片边缘露出；右侧内容顺延到 Hero 下方
  * - 中小屏 (<=1200px)：单列堆叠，卡片回归文档流
  * ========================================================= */
 .content {
   position: relative;
   min-height: 1000px;
   width: 70%;
-  margin: 0 auto;
+  margin: -330px auto 0;
   display: flex;
   gap: var(--space-xl);
-  padding: var(--space-3xl) 0;
+  padding: 0 0 var(--space-3xl) 0;
+  z-index: 1;
   /* background-color: rgba(10, 15, 20, 0.2); */
 }
 
@@ -498,7 +500,8 @@ img {
   height: auto;
 }
 
-/* 个人卡片：大屏下 sticky 跟随滚动，顶部留出 header 高度 */
+/* 个人卡片：大屏下 sticky 跟随滚动，顶部留出 header 高度
+ * 使用半透明背景 + 背景模糊，营造“贯穿/浮于背景”的玻璃质感 */
 .content .me-card {
   position: sticky;
   top: 100px;
@@ -509,10 +512,20 @@ img {
   min-height: 720px;
   border-radius: var(--card-radius);
   text-align: center;
-  border: var(--card-border);
-  box-shadow: var(--card-shadow);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.25);
+  background-color: rgba(22, 27, 34, 0.55);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
   padding: 0px 30px;
   box-sizing: border-box;
+}
+
+/* 浅色主题下卡片玻璃效果：使用白色半透明 */
+:root[data-theme="light"] .content .me-card {
+  border: 1px solid rgba(31, 35, 40, 0.10);
+  background-color: rgba(255, 255, 255, 0.60);
+  box-shadow: 0 8px 32px rgba(31, 35, 40, 0.10);
 }
 
 /* 滚动后不再使用固定定位顶出屏幕，直接用 sticky 即可 */
@@ -521,11 +534,12 @@ img {
   top: 100px;
 }
 
-/* 右栏：内容流占满剩余空间 */
+/* 右栏：内容流占满剩余空间，顶部留出 Hero 露出区域 */
 .content .co-right {
   flex: 1;
   min-width: 0;
   width: auto;
+  padding-top: 180px;
 }
 
 
@@ -918,6 +932,7 @@ img {
   .content{
     display: block;
     width: 90%;
+    margin: -160px auto 0;
     padding: var(--space-xl) 0;
   }
   .content .co-left{
@@ -939,8 +954,9 @@ img {
     position: relative;
     top: auto;
   }
-  .co-right{
+  .content .co-right{
     width: 100%;
+    padding-top: 0;
   }
 
   .min_menu{
@@ -977,6 +993,7 @@ img {
 
   .navigation>.nav-titleBox {
     margin-top: 10rem;
+    padding-left: 8%;
   }
 }
 
