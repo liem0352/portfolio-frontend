@@ -1,24 +1,6 @@
 (function () {
   initActive() // 初始化活动状态
   bindEvenInit() // 绑定事件初始化
-  var mycard = $('#mycard') // 获取ID为mycard的元素
-  
-  // 获取mycard元素的顶部偏移量
-  let mycardTop = mycard && mycard.offset() && mycard.offset().top;
-
-  // 添加滚动事件监听
-  window.onscroll = function () {
-    var e = e || window.event; // 兼容性处理
-    var scrollTop = document.documentElement.scrollTop || document.body.scrollTop; // 获取当前滚动条位置
-    console.log(scrollTop); // 打印当前滚动位置
-    // 判断滚动位置是否超过mycard的顶部位置
-    // if (scrollTop > mycardTop && window.innerWidth > 1200) {
-    if (window.innerWidth > 1200) {
-      mycard.addClass('scroll'); // 如果超过，添加scroll类
-    } else{
-      mycard.removeClass('scroll'); // 否则，移除scroll类
-    }
-  }
 
   // 初始化活动状态（主题）的函数
   // 简化：仅设置 data-theme 属性，所有颜色变量由 base.css 中的 :root[data-theme="..."] 块统一管理

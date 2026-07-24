@@ -442,36 +442,58 @@ img {
   margin: 0 auto;
 }
 
+/* =========================================================
+ * 首页内容区布局
+ * - 大屏 (>1200px)：左侧 me-card 作为固定侧边栏，右侧为内容流，互不重叠
+ * - 中小屏 (<=1200px)：单列堆叠，卡片回归文档流
+ * ========================================================= */
 .content {
   position: relative;
-  top: -90px;
   min-height: 1000px;
   width: 70%;
   margin: 0 auto;
   display: flex;
+  gap: var(--space-xl);
+  padding: var(--space-3xl) 0;
   /* background-color: rgba(10, 15, 20, 0.2); */
 }
 
-
-/* 左半部分 */
-.content .me-card {
-   top: 500px; 
+/* 左栏：侧边栏定位容器 */
+.content .co-left {
+  position: relative;
+  width: 320px;
+  flex: 0 0 320px;
+  height: auto;
 }
 
-.scroll{
-  position: fixed !important;
-  top: 100%;
-}
+/* 个人卡片：大屏下 sticky 跟随滚动，顶部留出 header 高度 */
 .content .me-card {
-  width: fit-content;
-  min-width: 285px;
-  transform: translateY(-351px);
-  height: 780px;
+  position: sticky;
+  top: 100px;
+  width: 100%;
+  min-width: auto;
+  transform: none;
+  height: auto;
+  min-height: 720px;
   border-radius: var(--card-radius);
   text-align: center;
   border: var(--card-border);
   box-shadow: var(--card-shadow);
   padding: 0px 30px;
+  box-sizing: border-box;
+}
+
+/* 滚动后不再使用固定定位顶出屏幕，直接用 sticky 即可 */
+.content .me-card.scroll {
+  position: sticky;
+  top: 100px;
+}
+
+/* 右栏：内容流占满剩余空间 */
+.content .co-right {
+  flex: 1;
+  min-width: 0;
+  width: auto;
 }
 
 
@@ -856,107 +878,73 @@ img {
 }
 
 
-  /* 手机*/
-  @media screen and (max-width: 1200px) {
-    .col>span{
-      visibility: hidden;
-    }
-    .content .me-card{
-      min-width: auto;
-    }
-    .co-left{
-      position: relative;
-      width: auto;
-      display: block;
-      height: auto;
-    }
-    .co-right{
-      width: 100%;
-    }
-    .content{
-      display: block;
-    }
-    .content .me-card{
-      width:auto;
-      transform: translateY(-20px);
-    }
-    .scroll{
-      position:relative !important;
-    }
-
-    
-    .min_menu{
-      display: inline-block;
-    }
-    /* .header .header-right{
-      display:none;
-    } */
-    .co-left{
-      display: none;
-    }
-    .co-right{
-      width: 100%;
-    }
-
-  
-    .header-right .min_menu-wrap{
-      text-align: center;
-    }
-    .header-right .header-nav>li{
-      display: block;
-    }
-    .header-right .kaig-bottm{
-      display: block;
-    }
-
-    .menu_list{
-      pointer-events: none;
-      position: absolute;
-      left: 0;
-      right: 0;
-      text-align: center;
-      opacity: 0;
-      background-color: var(--headerhover);
-      transform: translateY(10px);
-      transition: .1s ease-in-out;
-    }
-
-    .menu_list.active{
-      opacity: 1;
-      pointer-events: all;
-      transform: translateY(0px);
-    }
-
-    .navigation>.nav-titleBox {
-      margin-top: 10rem;
-    }
+  /* 手机与平板 (<=1200px)：单列堆叠，隐藏左侧固定侧边栏 */
+@media screen and (max-width: 1200px) {
+  .col>span{
+    visibility: hidden;
   }
-
-/* 平板 */
- @media screen and (max-width:1200px){
-  .navigation{
-    text-align: center;
-    background-size: 100% 100%;
-  }
- 
-  .co-left{
-    position: relative;
-    width: auto;
+  .content{
     display: block;
+    width: 90%;
+    padding: var(--space-xl) 0;
+  }
+  .content .co-left{
+    display: none;
+    width: auto;
+    flex: none;
     height: auto;
+  }
+  .content .me-card{
+    position: relative;
+    top: auto;
+    width: auto;
+    min-width: auto;
+    transform: translateY(-20px);
+    height: auto;
+    min-height: auto;
+  }
+  .content .me-card.scroll{
+    position: relative;
+    top: auto;
   }
   .co-right{
     width: 100%;
   }
-  .content{
+
+  .min_menu{
+    display: inline-block;
+  }
+
+  .header-right .min_menu-wrap{
+    text-align: center;
+  }
+  .header-right .header-nav>li{
     display: block;
   }
-  .content .me-card{
-    width:auto;
-    transform: translateY(-20px);
+  .header-right .kaig-bottm{
+    display: block;
   }
-  .scroll{
-    position:relative !important;
+
+  .menu_list{
+    pointer-events: none;
+    position: absolute;
+    left: 0;
+    right: 0;
+    text-align: center;
+    opacity: 0;
+    background-color: var(--headerhover);
+    transform: translateY(10px);
+    transition: .1s ease-in-out;
+  }
+
+  .menu_list.active{
+    opacity: 1;
+    pointer-events: all;
+    transform: translateY(0px);
+  }
+
+  .navigation>.nav-titleBox {
+    margin-top: 10rem;
   }
 }
 
